@@ -1,2 +1,4 @@
-package io.reflectoring.rentAcar.domain.model;public class Locations {
+package io.reflectoring.rentAcar.domain.model;
+
+public class Locations {
 }

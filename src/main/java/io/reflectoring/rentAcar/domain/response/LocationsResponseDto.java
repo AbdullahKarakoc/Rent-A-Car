@@ -1,4 +1,4 @@
-package io.reflectoring.rentAcar.domain.request;
+package io.reflectoring.rentAcar.domain.response;
 
-public class LocationsRequestDto {
+public class LocationsResponseDto {
 }

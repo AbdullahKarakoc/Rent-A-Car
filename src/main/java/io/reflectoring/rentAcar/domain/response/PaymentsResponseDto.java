@@ -1,4 +1,4 @@
 package io.reflectoring.rentAcar.domain.response;
 
-public class PaymentsRequestDto {
+public class PaymentsResponseDto {
 }

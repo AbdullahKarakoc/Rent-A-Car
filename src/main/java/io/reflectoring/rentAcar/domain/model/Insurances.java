@@ -1,2 +1,4 @@
-package io.reflectoring.rentAcar.domain.model;public class Insurances {
+package io.reflectoring.rentAcar.domain.model;
+
+public class Insurances {
 }
