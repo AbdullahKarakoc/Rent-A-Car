@@ -1,5 +1,6 @@
 package io.reflectoring.rentAcar.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class Cars {
     private String model;
     private String color;
     private String carStatus;
+    private String plateNumber;
     private int year;
     private int pricePerHour;
 
@@ -46,7 +48,7 @@ public class Cars {
     private LocalDateTime availableFrom;
     private LocalDateTime availableTo;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     private List<Rentals> rentals;
 
