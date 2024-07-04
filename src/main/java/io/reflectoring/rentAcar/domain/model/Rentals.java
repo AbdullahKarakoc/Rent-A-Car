@@ -29,6 +29,9 @@ public class Rentals {
     @Id
     @GeneratedValue
     private UUID rentalUUID;
+    private LocalDateTime rentalDate;
+    private LocalDateTime returnDate;
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToOne
     @JoinColumn(name = "carUUID", nullable = false)
@@ -42,8 +45,6 @@ public class Rentals {
     private List<Payments> payments;
 
 
-    private LocalDateTime rentalDate;
-    private LocalDateTime returnDate;
 
 
     @CreatedDate

@@ -34,13 +34,13 @@ public class Cars {
     @Id
     @GeneratedValue
     private UUID carUUID;
-
     private String model;
     private String brand;
     private int year;
     private String color;
     private String registrationNumber;
     private boolean available;
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToOne
     @JoinColumn(name = "locationUUID", nullable = false)

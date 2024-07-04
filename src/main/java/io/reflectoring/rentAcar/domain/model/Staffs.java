@@ -28,11 +28,11 @@ public class Staffs {
     @Id
     @GeneratedValue
     private UUID staffUUID;
-
     private String firstName;
     private String lastName;
     private String phone;
     private String email;
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToOne
     @JoinColumn(name = "branchUUID", nullable = false)

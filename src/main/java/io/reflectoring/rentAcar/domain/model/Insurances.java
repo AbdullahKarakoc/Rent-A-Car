@@ -34,9 +34,10 @@ public class Insurances {
     @Id
     @GeneratedValue
     private UUID insuranceUUID;
-
     private String provider;
     private double amount;
+    private InsuranceCategory category;
+    private boolean deleted = Boolean.FALSE;
 
     @OneToOne
     @JoinColumn(name = "carUUID")

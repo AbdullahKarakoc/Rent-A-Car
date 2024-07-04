@@ -32,8 +32,8 @@ public class Branchs {
     @Id
     @GeneratedValue
     private UUID branchUUID;
-
     private String branchName;
+    private boolean deleted = Boolean.FALSE;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "addressUUID", referencedColumnName = "addressUUID")

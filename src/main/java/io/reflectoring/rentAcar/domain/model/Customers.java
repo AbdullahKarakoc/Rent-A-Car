@@ -31,12 +31,12 @@ public class Customers {
     @Id
     @GeneratedValue
     private UUID customerUUID;
-
     private String firstName;
     private String lastName;
     private String phone;
     private String address;
     private String email;
+    private boolean deleted = Boolean.FALSE;
 
     @OneToMany(mappedBy = "customer")
     private List<Rentals> rental;

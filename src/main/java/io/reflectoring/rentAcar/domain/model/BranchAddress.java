@@ -24,19 +24,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "branchAddress")
-@SQLDelete(sql = "UPDATE branchAddress SET deleted = true WHERE id=?")
+@Table(name = "branch_address")
+@SQLDelete(sql = "UPDATE branch_address SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
 public class BranchAddress {
 
     @Id
     @GeneratedValue
     private UUID addressUUID;
-
     private String street;
     private String city;
     private String country;
     private String zipCode;
+    private boolean deleted = Boolean.FALSE;
 
     @OneToOne(mappedBy = "address")
     private Branchs branch;

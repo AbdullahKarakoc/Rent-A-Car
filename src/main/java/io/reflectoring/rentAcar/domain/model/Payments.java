@@ -28,10 +28,10 @@ public class Payments {
     @Id
     @GeneratedValue
     private UUID paymentUUID;
-
     private String cardNumber;
     private double amount;
     private String paymentType;
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToOne
     @JoinColumn(name = "rentalUUID", nullable = false)

@@ -6,14 +6,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class CarsResponseDto {
-    private UUID carUUID;
-    private String model;
-    private String brand;
-    private int year;
-    private String color;
-    private String registrationNumber;
-    private boolean available;
+public class BranchsResponseDto {
+    private UUID branchUUID;
+    private String branchName;
     private LocalDateTime createDate;
     private LocalDateTime lastModified;
     private String createBy;
