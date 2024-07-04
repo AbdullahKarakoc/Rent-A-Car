@@ -1,5 +1,6 @@
 package io.reflectoring.rentAcar.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.reflectoring.rentAcar.enums.InsuranceCategory;
 import jakarta.persistence.*;
@@ -31,20 +32,15 @@ import java.util.UUID;
 public class Insurances {
 
     @Id
-    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
-    private UUID id;
+    @GeneratedValue
+    private UUID insuranceUUID;
+
     private String provider;
-    private LocalDateTime start;
-    private LocalDateTime end;
-    private int cost;
-    private InsuranceCategory insuranceCategory;
+    private double amount;
 
-
-    @JsonManagedReference
-    @OneToMany
-    @JoinColumn(name = "insurance_id")
-    private List<Insurances> insurances;
-
+    @OneToOne
+    @JoinColumn(name = "carUUID")
+    private Cars car;
 
 
     @CreatedDate

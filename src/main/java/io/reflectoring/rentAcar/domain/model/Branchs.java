@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DialectOverride;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
@@ -16,7 +15,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -26,31 +24,27 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "car")
-@SQLDelete(sql = "UPDATE car SET deleted = true WHERE id=?")
+@Table(name = "branch")
+@SQLDelete(sql = "UPDATE branch SET deleted = true WHERE id=?")
 @Where(clause = "deleted=false")
-public class Cars {
+public class Branchs {
 
     @Id
     @GeneratedValue
-    private UUID carUUID;
+    private UUID branchUUID;
 
-    private String model;
-    private String brand;
-    private int year;
-    private String color;
-    private String registrationNumber;
-    private boolean available;
+    private String branchName;
 
-    @ManyToOne
-    @JoinColumn(name = "locationUUID", nullable = false)
-    private Branchs branch;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "addressUUID", referencedColumnName = "addressUUID")
+    private BranchAddress address;
 
-    @OneToMany(mappedBy = "car")
-    private List<Rentals> rentals;
+    @OneToMany(mappedBy = "branch")
+    private List<Cars> cars;
 
-    @OneToOne(mappedBy = "car")
-    private Insurances insurance;
+    @OneToMany(mappedBy = "branch")
+    private List<Staffs> staff;
+
 
     @CreatedDate
     @Column(
@@ -73,6 +67,4 @@ public class Cars {
     @LastModifiedBy
     @Column(insertable = false)
     private String lastModifiedBy;
-
-
 }

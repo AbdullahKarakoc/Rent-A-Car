@@ -29,19 +29,17 @@ import java.util.UUID;
 public class Customers {
 
     @Id
-    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
-    private UUID id;
+    @GeneratedValue
+    private UUID customerUUID;
+
     private String firstName;
     private String lastName;
-    private String email;
     private String phone;
-    private String licenseNumber;
-    private String nationality;
+    private String address;
+    private String email;
 
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Customers> customers;
+    @OneToMany(mappedBy = "customer")
+    private List<Rentals> rental;
 
 
 

@@ -1,4 +1,4 @@
 package io.reflectoring.rentAcar.enums;
 
-public enum Cities {
+public enum City {
 }
