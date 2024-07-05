@@ -4,6 +4,7 @@ import io.reflectoring.rentAcar.domain.model.BranchAddress;
 import io.reflectoring.rentAcar.domain.model.Branchs;
 import io.reflectoring.rentAcar.domain.request.BranchsRequestDto;
 import io.reflectoring.rentAcar.domain.response.BranchsResponseDto;
+import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.BranchAddressRepository;
 import io.reflectoring.rentAcar.repository.BranchsRepository;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BranchsService {
+
     @Autowired
     private BranchsRepository branchRepository;
 
@@ -43,7 +45,7 @@ public class BranchsService {
                 .orElseThrow(() -> new DataNotFoundException("Branch address not found"));
 
         Branchs branch = modelMapper.map(branchRequestDto, Branchs.class);
-        branch.setBranchAddress(branchAddress);
+        branch.setAddress(branchAddress);
         branch = branchRepository.save(branch);
         return modelMapper.map(branch, BranchsResponseDto.class);
     }
@@ -56,7 +58,7 @@ public class BranchsService {
                 .orElseThrow(() -> new DataNotFoundException("Branch address not found"));
 
         modelMapper.map(branchRequestDto, existingBranch);
-        existingBranch.setBranchAddress(branchAddress);
+        existingBranch.setAddress(branchAddress);
         Branchs updatedBranch = branchRepository.save(existingBranch);
         return modelMapper.map(updatedBranch, BranchsResponseDto.class);
     }
@@ -64,6 +66,7 @@ public class BranchsService {
     public void deleteBranch(UUID id) {
         Branchs branch = branchRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Branch not found"));
-        branchRepository.delete(branch);
+        branch.setDeleted(true);
+        branchRepository.save(branch);
     }
 }

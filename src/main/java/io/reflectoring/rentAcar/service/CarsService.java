@@ -4,6 +4,7 @@ import io.reflectoring.rentAcar.domain.model.Branchs;
 import io.reflectoring.rentAcar.domain.model.Cars;
 import io.reflectoring.rentAcar.domain.request.CarsRequestDto;
 import io.reflectoring.rentAcar.domain.response.CarsResponseDto;
+import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.BranchsRepository;
 import io.reflectoring.rentAcar.repository.CarsRepository;
 import org.modelmapper.ModelMapper;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CarsService {
+
     @Autowired
     private CarsRepository carRepository;
 
@@ -64,6 +66,7 @@ public class CarsService {
     public void deleteCar(UUID id) {
         Cars car = carRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Car not found"));
-        carRepository.delete(car);
+        car.setDeleted(true);
+        carRepository.save(car);
     }
 }

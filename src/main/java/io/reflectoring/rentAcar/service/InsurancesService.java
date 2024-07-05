@@ -1,9 +1,12 @@
 package io.reflectoring.rentAcar.service;
 
+import io.reflectoring.rentAcar.domain.model.Cars;
 import io.reflectoring.rentAcar.domain.model.Insurances;
 import io.reflectoring.rentAcar.domain.model.Rentals;
 import io.reflectoring.rentAcar.domain.request.InsurancesRequestDto;
 import io.reflectoring.rentAcar.domain.response.InsurancesResponseDto;
+import io.reflectoring.rentAcar.exception.DataNotFoundException;
+import io.reflectoring.rentAcar.repository.CarsRepository;
 import io.reflectoring.rentAcar.repository.InsurancesRepository;
 import io.reflectoring.rentAcar.repository.RentalsRepository;
 import org.modelmapper.ModelMapper;
@@ -20,7 +23,7 @@ public class InsurancesService {
     private InsurancesRepository insuranceRepository;
 
     @Autowired
-    private RentalsRepository rentalRepository;
+    private CarsRepository carRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -39,11 +42,11 @@ public class InsurancesService {
     }
 
     public InsurancesResponseDto saveInsurance(InsurancesRequestDto insuranceRequestDto) {
-        Rentals rental = rentalRepository.findById(insuranceRequestDto.getRentalUUID())
-                .orElseThrow(() -> new DataNotFoundException("Rental not found"));
+        Cars car = carRepository.findById(insuranceRequestDto.getCarUUID())
+                .orElseThrow(() -> new DataNotFoundException("Car not found"));
 
         Insurances insurance = modelMapper.map(insuranceRequestDto, Insurances.class);
-        insurance.setRental(rental);
+        insurance.setCar(car);
         insurance = insuranceRepository.save(insurance);
         return modelMapper.map(insurance, InsurancesResponseDto.class);
     }
@@ -52,11 +55,11 @@ public class InsurancesService {
         Insurances existingInsurance = insuranceRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Insurance not found"));
 
-        Rentals rental = rentalRepository.findById(insuranceRequestDto.getRentalUUID())
-                .orElseThrow(() -> new DataNotFoundException("Rental not found"));
+        Cars car = carRepository.findById(insuranceRequestDto.getCarUUID())
+                .orElseThrow(() -> new DataNotFoundException("Car not found"));
 
         modelMapper.map(insuranceRequestDto, existingInsurance);
-        existingInsurance.setRental(rental);
+        existingInsurance.setCar(car);
         Insurances updatedInsurance = insuranceRepository.save(existingInsurance);
         return modelMapper.map(updatedInsurance, InsurancesResponseDto.class);
     }

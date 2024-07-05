@@ -5,6 +5,7 @@ import io.reflectoring.rentAcar.domain.model.Customers;
 import io.reflectoring.rentAcar.domain.model.Rentals;
 import io.reflectoring.rentAcar.domain.request.RentalsRequestDto;
 import io.reflectoring.rentAcar.domain.response.RentalsResponseDto;
+import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.CarsRepository;
 import io.reflectoring.rentAcar.repository.CustomersRepository;
 import io.reflectoring.rentAcar.repository.RentalsRepository;
