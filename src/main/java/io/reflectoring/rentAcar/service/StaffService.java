@@ -1,5 +1,6 @@
-package io.reflectoring.rentAcar.domain.model;
+package io.reflectoring.rentAcar.service;
 
+import io.reflectoring.rentAcar.domain.model.Staffs;
 import io.reflectoring.rentAcar.domain.request.StaffsRequestDto;
 import io.reflectoring.rentAcar.domain.response.StaffsResponseDto;
 import io.reflectoring.rentAcar.repository.StaffRepository;
