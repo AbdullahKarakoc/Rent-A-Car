@@ -28,7 +28,8 @@ public class CustomersService {
     }
 
     public CustomersResponseDto getCustomerById(UUID id) {
-        Customers customer = customerRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Customer not found"));
+        Customers customer = customerRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Customer not found"));
         return modelMapper.map(customer, CustomersResponseDto.class);
     }
 
@@ -39,15 +40,17 @@ public class CustomersService {
     }
 
     public CustomersResponseDto updateCustomer(UUID id, CustomersRequestDto customerRequestDto) {
-        Customers existingCustomer = customerRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Customer not found"));
+        Customers existingCustomer = customerRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Customer not found"));
         modelMapper.map(customerRequestDto, existingCustomer);
         Customers updatedCustomer = customerRepository.save(existingCustomer);
         return modelMapper.map(updatedCustomer, CustomersResponseDto.class);
     }
 
     public void deleteCustomer(UUID id) {
-        Customers customer = customerRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Customer not found"));
+        Customers customer = customerRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Customer not found"));
         customerRepository.delete(customer);
     }
 }
-}
+
