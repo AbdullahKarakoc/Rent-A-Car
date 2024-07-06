@@ -27,7 +27,7 @@ import java.util.UUID;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "insurance")
-@SQLDelete(sql = "UPDATE insurance SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE insurance SET deleted = true WHERE insuranceUUID=?")
 @Where(clause = "deleted=false")
 public class Insurances {
 

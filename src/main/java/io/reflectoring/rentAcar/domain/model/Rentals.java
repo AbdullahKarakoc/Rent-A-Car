@@ -22,7 +22,7 @@ import java.util.UUID;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "rental")
-@SQLDelete(sql = "UPDATE rental SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE rental SET deleted = true WHERE rentalUUID=?")
 @Where(clause = "deleted=false")
 public class Rentals {
 

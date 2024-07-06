@@ -12,8 +12,5 @@ public class BranchAddressResponseDto {
     private String city;
     private String country;
     private String zipCode;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+
 }

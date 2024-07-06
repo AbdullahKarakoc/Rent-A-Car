@@ -25,7 +25,7 @@ import java.util.UUID;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "branch")
-@SQLDelete(sql = "UPDATE branch SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE branch SET deleted = true WHERE branchUUID=?")
 @Where(clause = "deleted=false")
 public class Branchs {
 

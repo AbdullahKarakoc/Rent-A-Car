@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/branches")
+@RequestMapping("/api/V1/branches")
 public class BranchsController {
     @Autowired
     private BranchsService branchService;

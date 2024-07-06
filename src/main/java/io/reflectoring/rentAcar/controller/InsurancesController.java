@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/insurances")
+@RequestMapping("/api/V1/insurances")
 public class InsurancesController {
     @Autowired
     private InsurancesService insuranceService;

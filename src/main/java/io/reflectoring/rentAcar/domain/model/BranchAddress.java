@@ -25,7 +25,7 @@ import java.util.UUID;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "branch_address")
-@SQLDelete(sql = "UPDATE branch_address SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE branch_address SET deleted = true WHERE addressUUID=?")
 @Where(clause = "deleted=false")
 public class BranchAddress {
 
@@ -43,25 +43,4 @@ public class BranchAddress {
 
 
 
-    @CreatedDate
-    @Column(
-            nullable = false,
-            updatable = false
-    )
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime lastModified;
-
-    @CreatedBy
-    @Column(
-            nullable = false,
-            updatable = false
-    )
-    private String createBy;
-
-    @LastModifiedBy
-    @Column(insertable = false)
-    private String lastModifiedBy;
 }
