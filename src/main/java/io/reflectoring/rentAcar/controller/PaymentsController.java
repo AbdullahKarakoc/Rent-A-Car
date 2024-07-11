@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/V1/payments")
+@RequestMapping("/payments")
 public class PaymentsController {
     @Autowired
     private PaymentsService paymentService;

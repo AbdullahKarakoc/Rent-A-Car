@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/V1/branch-addresses")
+@RequestMapping("/branch-addresses")
 public class BranchAddressController {
     @Autowired
     private BranchAddressService branchAddressService;
