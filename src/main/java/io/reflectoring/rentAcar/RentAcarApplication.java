@@ -19,8 +19,33 @@ public class RentAcarApplication {
 		SpringApplication.run(RentAcarApplication.class, args);
 	}
 
+
 	@Bean
-	public CommandLineRunner runner(RoleRepository roleRepository){
+	public CommandLineRunner runner_SUPER_USER(RoleRepository roleRepository){
+		return args -> {
+			if(roleRepository.findByName("SUPER_USER").isEmpty()){
+				roleRepository.save(
+						Role.builder().name("SUPER_USER").build()
+				);
+			}
+		};
+	}
+
+
+	@Bean
+	public CommandLineRunner runner_ADMIN(RoleRepository roleRepository){
+		return args -> {
+			if(roleRepository.findByName("ADMIN").isEmpty()){
+				roleRepository.save(
+						Role.builder().name("ADMIN").build()
+				);
+			}
+		};
+	}
+
+
+	@Bean
+	public CommandLineRunner runner_USER(RoleRepository roleRepository){
 		return args -> {
 			if(roleRepository.findByName("USER").isEmpty()){
 				roleRepository.save(
