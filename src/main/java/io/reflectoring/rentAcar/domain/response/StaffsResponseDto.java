@@ -12,8 +12,5 @@ public class StaffsResponseDto {
     private String lastName;
     private String phone;
     private String email;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+    private BranchsResponseDto branch;
 }

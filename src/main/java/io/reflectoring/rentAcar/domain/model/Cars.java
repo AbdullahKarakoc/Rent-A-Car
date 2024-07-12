@@ -43,7 +43,7 @@ public class Cars {
     private boolean deleted = Boolean.FALSE;
 
     @ManyToOne
-    @JoinColumn(name = "locationUUID", nullable = false)
+    @JoinColumn(name = "branchUUID", nullable = false)
     private Branchs branch;
 
     @OneToMany(mappedBy = "car")
@@ -52,27 +52,6 @@ public class Cars {
     @OneToOne(mappedBy = "car")
     private Insurances insurance;
 
-    @CreatedDate
-    @Column(
-            nullable = false,
-            updatable = false
-    )
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime lastModified;
-
-    @CreatedBy
-    @Column(
-            nullable = false,
-            updatable = false
-    )
-    private String createBy;
-
-    @LastModifiedBy
-    @Column(insertable = false)
-    private String lastModifiedBy;
 
 
 }

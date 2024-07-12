@@ -43,26 +43,6 @@ public class Customers {
 
 
 
-    @CreatedDate
-    @Column(
-            nullable = false,
-            updatable = false
-    )
-    private LocalDateTime createDate;
 
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime lastModified;
-
-    @CreatedBy
-    @Column(
-            nullable = false,
-            updatable = false
-    )
-    private String createBy;
-
-    @LastModifiedBy
-    @Column(insertable = false)
-    private String lastModifiedBy;
 
 }

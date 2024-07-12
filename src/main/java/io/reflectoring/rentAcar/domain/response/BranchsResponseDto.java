@@ -9,8 +9,5 @@ import java.util.UUID;
 public class BranchsResponseDto {
     private UUID branchUUID;
     private String branchName;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+    private BranchAddressResponseDto address;
 }

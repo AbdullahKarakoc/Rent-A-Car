@@ -14,8 +14,5 @@ public class CarsResponseDto {
     private String color;
     private String registrationNumber;
     private boolean available;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+
 }

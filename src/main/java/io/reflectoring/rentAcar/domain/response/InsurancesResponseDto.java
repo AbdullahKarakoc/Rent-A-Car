@@ -12,8 +12,5 @@ public class InsurancesResponseDto {
     private String provider;
     private double amount;
     private InsuranceCategory category;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+
 }

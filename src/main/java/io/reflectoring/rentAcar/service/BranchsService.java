@@ -41,12 +41,9 @@ public class BranchsService {
     }
 
     public BranchsResponseDto saveBranch(BranchsRequestDto branchRequestDto) {
-        BranchAddress branchAddress = branchAddressRepository.findById(branchRequestDto.getBranchAddressUUID())
-                .orElseThrow(() -> new DataNotFoundException("Branch address not found"));
-
         Branchs branch = modelMapper.map(branchRequestDto, Branchs.class);
-        branch.setAddress(branchAddress);
-        branch = branchRepository.save(branch);
+        branch.setAddress(modelMapper.map(branchRequestDto.getBranchAddress(), BranchAddress.class));
+        branch = branchRepository.saveAndFlush(branch);
         return modelMapper.map(branch, BranchsResponseDto.class);
     }
 
@@ -54,11 +51,9 @@ public class BranchsService {
         Branchs existingBranch = branchRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Branch not found"));
 
-        BranchAddress branchAddress = branchAddressRepository.findById(branchRequestDto.getBranchAddressUUID())
-                .orElseThrow(() -> new DataNotFoundException("Branch address not found"));
-
         modelMapper.map(branchRequestDto, existingBranch);
-        existingBranch.setAddress(branchAddress);
+        existingBranch.setAddress(modelMapper.map(branchRequestDto.getBranchAddress(), BranchAddress.class));
+
         Branchs updatedBranch = branchRepository.save(existingBranch);
         return modelMapper.map(updatedBranch, BranchsResponseDto.class);
     }
@@ -66,6 +61,7 @@ public class BranchsService {
     public void deleteBranch(UUID id) {
         Branchs branch = branchRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Branch not found"));
+
         branch.setDeleted(true);
         branchRepository.save(branch);
     }

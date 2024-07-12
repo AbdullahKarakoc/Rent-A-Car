@@ -10,8 +10,5 @@ public class RentalsResponseDto {
     private UUID rentalUUID;
     private LocalDateTime rentalDate;
     private LocalDateTime returnDate;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+
 }

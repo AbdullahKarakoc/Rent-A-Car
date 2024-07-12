@@ -12,6 +12,10 @@ public class BranchsRequestDto {
     @NotBlank(message = "Branch name is required")
     private String branchName;
 
-    @NotNull(message = "Branch address ID is required")
-    private UUID branchAddressUUID;
+//    @NotNull(message = "Branch address ID is required")
+//    private BranchsRequestDto branchAddress;
+
+    @NotNull(message = "Branch address is required")
+    private BranchAddressRequestDto branchAddress;
+
 }

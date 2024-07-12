@@ -13,8 +13,6 @@ public class CustomersResponseDto {
     private String phone;
     private String address;
     private String email;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+
+
 }

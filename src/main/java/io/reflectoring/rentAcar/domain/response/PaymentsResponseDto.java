@@ -11,8 +11,5 @@ public class PaymentsResponseDto {
     private String cardNumber;
     private double amount;
     private String paymentType;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModified;
-    private String createBy;
-    private String lastModifiedBy;
+
 }
