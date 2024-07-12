@@ -34,13 +34,20 @@ public class BranchAddress {
     private UUID addressUUID;
     private String street;
     private String city;
-    private String country;
+    private Country country;
     private String zipCode;
     private boolean deleted = Boolean.FALSE;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "address",cascade = CascadeType.ALL)
     private Branchs branch;
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 
 
 }

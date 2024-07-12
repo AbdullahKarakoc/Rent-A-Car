@@ -33,19 +33,20 @@ public class Rentals {
     private LocalDateTime returnDate;
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "carUUID", nullable = false)
     private Cars car;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customerUUID", nullable = false)
     private Customers customer;
 
-    @OneToMany(mappedBy = "rental")
-    private List<Payments> payments;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "paymentUUID", nullable = false)
+    private Payments payment;
 
-
-
-
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "staffUUID", nullable = false)
+    private Staffs staff;
 }

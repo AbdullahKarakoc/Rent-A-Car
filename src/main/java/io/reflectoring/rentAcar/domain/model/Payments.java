@@ -1,5 +1,6 @@
 package io.reflectoring.rentAcar.domain.model;
 
+import io.reflectoring.rentAcar.enums.PaymentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,15 +29,19 @@ public class Payments {
     @Id
     @GeneratedValue
     private UUID paymentUUID;
-    private String cardNumber;
-    private double amount;
-    private String paymentType;
+    private int totalAmount;
+    private PaymentType paymentType;
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToOne
-    @JoinColumn(name = "rentalUUID", nullable = false)
+    @OneToOne(mappedBy = "payment",cascade = CascadeType.ALL)
     private Rentals rental;
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 
 }

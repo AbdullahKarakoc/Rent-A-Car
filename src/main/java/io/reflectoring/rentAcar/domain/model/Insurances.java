@@ -35,14 +35,20 @@ public class Insurances {
     @GeneratedValue
     private UUID insuranceUUID;
     private String provider;
-    private double amount;
     private InsuranceCategory category;
+    private double cost;
     private boolean deleted = Boolean.FALSE;
 
-    @OneToOne
-    @JoinColumn(name = "carUUID")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "carUUID", nullable = true)
     private Cars car;
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 
 }

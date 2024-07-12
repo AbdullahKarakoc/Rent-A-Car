@@ -13,6 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -38,6 +40,15 @@ public class Staffs {
     @JoinColumn(name = "branchUUID", nullable = false)
     private Branchs branch;
 
+    @OneToMany(mappedBy = "staff",cascade = CascadeType.ALL)
+    private List<Rentals> rental;
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 
 }

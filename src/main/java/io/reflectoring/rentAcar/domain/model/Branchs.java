@@ -39,12 +39,18 @@ public class Branchs {
     @JoinColumn(name = "addressUUID", referencedColumnName = "addressUUID")
     private BranchAddress address;
 
-    @OneToMany(mappedBy = "branch")
+    @OneToMany(mappedBy = "branch",cascade = CascadeType.ALL)
     private List<Cars> cars;
 
-    @OneToMany(mappedBy = "branch")
+    @OneToMany(mappedBy = "branch",cascade = CascadeType.ALL)
     private List<Staffs> staff;
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 
 }

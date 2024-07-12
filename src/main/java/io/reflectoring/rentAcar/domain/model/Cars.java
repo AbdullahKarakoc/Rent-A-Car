@@ -2,6 +2,9 @@ package io.reflectoring.rentAcar.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.reflectoring.rentAcar.enums.Brand;
+import io.reflectoring.rentAcar.enums.Color;
+import io.reflectoring.rentAcar.enums.Segment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +21,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,24 +38,32 @@ public class Cars {
     @Id
     @GeneratedValue
     private UUID carUUID;
+    private Brand brand;
+    private Segment segment;
     private String model;
-    private String brand;
-    private int year;
-    private String color;
-    private String registrationNumber;
-    private boolean available;
+    private Color color;
+    private String plateNumber;
+    private Date year;
+    private boolean isAvailable;
+    private int pricePerHour;
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "branchUUID", nullable = false)
     private Branchs branch;
 
-    @OneToMany(mappedBy = "car")
-    private List<Rentals> rentals;
+    @OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
+    private List<Rentals> rental;
 
-    @OneToOne(mappedBy = "car")
-    private Insurances insurance;
+    @OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
+    private List<Insurances> insurance;
 
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
 
 }
