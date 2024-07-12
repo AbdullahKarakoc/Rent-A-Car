@@ -43,20 +43,21 @@ public class Cars {
     private String model;
     private Color color;
     private String plateNumber;
-    private Date year;
-    private boolean isAvailable;
+    private Integer year;
     private int pricePerHour;
+    private boolean isAvailable;
     private boolean deleted = Boolean.FALSE;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "branchUUID", nullable = false)
+    @JoinColumn(name = "branchUUID", nullable = true)
     private Branchs branch;
 
     @OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
     private List<Rentals> rental;
 
-    @OneToMany(mappedBy = "car",cascade = CascadeType.ALL)
-    private List<Insurances> insurance;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "insurancesUUID", nullable = true)
+    private Insurances insurance;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

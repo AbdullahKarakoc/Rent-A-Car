@@ -39,8 +39,8 @@ public class Insurances {
     private double cost;
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "carUUID", nullable = true)
+
+    @OneToOne(mappedBy = "insurance",cascade = CascadeType.ALL)
     private Cars car;
 
     @CreatedDate

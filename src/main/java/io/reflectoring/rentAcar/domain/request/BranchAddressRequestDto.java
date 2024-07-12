@@ -1,5 +1,6 @@
 package io.reflectoring.rentAcar.domain.request;
 
+import io.reflectoring.rentAcar.enums.Country;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class BranchAddressRequestDto {
 
     @NotBlank(message = "Country is required")
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Country name must be only characters")
-    private String country;
+    private Country country;
 
     @NotBlank(message = "Zip code is required")
     @Pattern(regexp = "^[0-9\\s]+$", message = "Zip code must be numeric")

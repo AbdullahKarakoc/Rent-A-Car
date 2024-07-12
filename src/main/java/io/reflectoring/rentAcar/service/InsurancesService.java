@@ -19,11 +19,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class InsurancesService {
-    @Autowired
-    private InsurancesRepository insuranceRepository;
 
     @Autowired
-    private CarsRepository carRepository;
+    private InsurancesRepository insuranceRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -42,11 +40,7 @@ public class InsurancesService {
     }
 
     public InsurancesResponseDto saveInsurance(InsurancesRequestDto insuranceRequestDto) {
-        Cars car = carRepository.findById(insuranceRequestDto.getCarUUID())
-                .orElseThrow(() -> new DataNotFoundException("Car not found"));
-
         Insurances insurance = modelMapper.map(insuranceRequestDto, Insurances.class);
-        insurance.setCar(car);
         insurance = insuranceRepository.save(insurance);
         return modelMapper.map(insurance, InsurancesResponseDto.class);
     }
@@ -55,11 +49,7 @@ public class InsurancesService {
         Insurances existingInsurance = insuranceRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Insurance not found"));
 
-        Cars car = carRepository.findById(insuranceRequestDto.getCarUUID())
-                .orElseThrow(() -> new DataNotFoundException("Car not found"));
-
         modelMapper.map(insuranceRequestDto, existingInsurance);
-        existingInsurance.setCar(car);
         Insurances updatedInsurance = insuranceRepository.save(existingInsurance);
         return modelMapper.map(updatedInsurance, InsurancesResponseDto.class);
     }

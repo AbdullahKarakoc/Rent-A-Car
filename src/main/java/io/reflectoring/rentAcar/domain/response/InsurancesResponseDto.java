@@ -10,7 +10,7 @@ import java.util.UUID;
 public class InsurancesResponseDto {
     private UUID insuranceUUID;
     private String provider;
-    private double amount;
+    private double cost;
     private InsuranceCategory category;
 
 }
