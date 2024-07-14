@@ -1,14 +1,10 @@
 package io.reflectoring.rentAcar.service;
 
-import io.reflectoring.rentAcar.domain.model.Cars;
-import io.reflectoring.rentAcar.domain.model.Customers;
-import io.reflectoring.rentAcar.domain.model.Rentals;
+import io.reflectoring.rentAcar.domain.model.*;
 import io.reflectoring.rentAcar.domain.request.RentalsRequestDto;
 import io.reflectoring.rentAcar.domain.response.RentalsResponseDto;
 import io.reflectoring.rentAcar.exception.DataNotFoundException;
-import io.reflectoring.rentAcar.repository.CarsRepository;
-import io.reflectoring.rentAcar.repository.CustomersRepository;
-import io.reflectoring.rentAcar.repository.RentalsRepository;
+import io.reflectoring.rentAcar.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RentalsService {
+
     @Autowired
     private RentalsRepository rentalRepository;
 
@@ -27,6 +24,12 @@ public class RentalsService {
 
     @Autowired
     private CustomersRepository customerRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
+
+    @Autowired
+    private PaymentsRepository paymentsRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -48,12 +51,21 @@ public class RentalsService {
         Cars car = carRepository.findById(rentalRequestDto.getCarUUID())
                 .orElseThrow(() -> new DataNotFoundException("Car not found"));
 
-        Customers customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
-                .orElseThrow(() -> new DataNotFoundException("Customer not found"));
+        Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
+                .orElseThrow(() -> new DataNotFoundException("Staff not found"));
+
+        Customers customer = modelMapper.map(rentalRequestDto.getCustomer(), Customers.class);
+        customer = customerRepository.save(customer);
+
+        Payments payment = modelMapper.map(rentalRequestDto.getPayment(), Payments.class);
+        payment = paymentsRepository.save(payment);
 
         Rentals rental = modelMapper.map(rentalRequestDto, Rentals.class);
         rental.setCar(car);
+        rental.setStaff(staff);
         rental.setCustomer(customer);
+        rental.setPayment(payment);
+
         rental = rentalRepository.save(rental);
         return modelMapper.map(rental, RentalsResponseDto.class);
     }
@@ -65,12 +77,21 @@ public class RentalsService {
         Cars car = carRepository.findById(rentalRequestDto.getCarUUID())
                 .orElseThrow(() -> new DataNotFoundException("Car not found"));
 
-        Customers customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
-                .orElseThrow(() -> new DataNotFoundException("Customer not found"));
+        Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
+                .orElseThrow(() -> new DataNotFoundException("Staff not found"));
+
+        Customers customer = modelMapper.map(rentalRequestDto.getCustomer(), Customers.class);
+        customer = customerRepository.save(customer);
+
+        Payments payment = modelMapper.map(rentalRequestDto.getPayment(), Payments.class);
+        payment = paymentsRepository.save(payment);
 
         modelMapper.map(rentalRequestDto, existingRental);
         existingRental.setCar(car);
+        existingRental.setStaff(staff);
         existingRental.setCustomer(customer);
+        existingRental.setPayment(payment);
+
         Rentals updatedRental = rentalRepository.save(existingRental);
         return modelMapper.map(updatedRental, RentalsResponseDto.class);
     }
@@ -81,3 +102,4 @@ public class RentalsService {
         rentalRepository.delete(rental);
     }
 }
+

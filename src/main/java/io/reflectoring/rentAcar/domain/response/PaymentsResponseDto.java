@@ -8,8 +8,7 @@ import java.util.UUID;
 @Data
 public class PaymentsResponseDto {
     private UUID paymentUUID;
-    private String cardNumber;
-    private double amount;
+    private int totalAmount;
     private String paymentType;
 
 }

@@ -19,13 +19,16 @@ public class CustomersRequestDto {
     @Size(min = 1, max = 50, message = "Last name length must be between 1 and 50 characters")
     private String lastName;
 
+    @NotBlank(message = "License number is required")
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$", message = "License number must be alphanumeric")
+    @Size(min = 1, max = 50, message = "License number length must be between 1 and 50 characters")
+    private String licenseNumber;
+
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp = "^[0-9\\s]+$", message = "Phone number must be numeric")
     private String phone;
 
-    @NotBlank(message = "Address is required")
-    private String address;
-
+    @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;
 }

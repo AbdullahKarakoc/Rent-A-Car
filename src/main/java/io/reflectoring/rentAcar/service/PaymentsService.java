@@ -41,11 +41,8 @@ public class PaymentsService {
     }
 
     public PaymentsResponseDto savePayment(PaymentsRequestDto paymentRequestDto) {
-        Rentals rental = rentalRepository.findById(paymentRequestDto.getRentalUUID())
-                .orElseThrow(() -> new DataNotFoundException("Rental not found"));
 
         Payments payment = modelMapper.map(paymentRequestDto, Payments.class);
-        payment.setRental(rental);
         payment = paymentRepository.save(payment);
         return modelMapper.map(payment, PaymentsResponseDto.class);
     }
@@ -54,11 +51,9 @@ public class PaymentsService {
         Payments existingPayment = paymentRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Payment not found"));
 
-        Rentals rental = rentalRepository.findById(paymentRequestDto.getRentalUUID())
-                .orElseThrow(() -> new DataNotFoundException("Rental not found"));
+
 
         modelMapper.map(paymentRequestDto, existingPayment);
-        existingPayment.setRental(rental);
         Payments updatedPayment = paymentRepository.save(existingPayment);
         return modelMapper.map(updatedPayment, PaymentsResponseDto.class);
     }
