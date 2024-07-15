@@ -3,15 +3,20 @@ package io.reflectoring.rentAcar.service;
 import io.reflectoring.rentAcar.domain.model.*;
 import io.reflectoring.rentAcar.domain.request.RentalsRequestDto;
 import io.reflectoring.rentAcar.domain.response.RentalsResponseDto;
+import io.reflectoring.rentAcar.exception.CarNotAvailableException;
 import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.*;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @Service
 public class RentalsService {
@@ -47,9 +52,15 @@ public class RentalsService {
         return modelMapper.map(rental, RentalsResponseDto.class);
     }
 
+    @Transactional
     public RentalsResponseDto saveRental(RentalsRequestDto rentalRequestDto) {
         Cars car = carRepository.findById(rentalRequestDto.getCarUUID())
                 .orElseThrow(() -> new DataNotFoundException("Car not found"));
+
+        // Car availability check
+        if (!car.isAvailable()) {
+            throw new CarNotAvailableException("This car is already rented until the return date. Please choose another car.");
+        }
 
         Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
                 .orElseThrow(() -> new DataNotFoundException("Staff not found"));
@@ -66,10 +77,15 @@ public class RentalsService {
         rental.setCustomer(customer);
         rental.setPayment(payment);
 
+        // Set car as unavailable
+        car.setAvailable(false);
+        carRepository.save(car);
+
         rental = rentalRepository.save(rental);
         return modelMapper.map(rental, RentalsResponseDto.class);
     }
 
+    @Transactional
     public RentalsResponseDto updateRental(UUID id, RentalsRequestDto rentalRequestDto) {
         Rentals existingRental = rentalRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Rental not found"));
@@ -100,6 +116,20 @@ public class RentalsService {
         Rentals rental = rentalRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Rental not found"));
         rentalRepository.delete(rental);
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // Runs every day at midnight
+    public void updateCarAvailability() {
+        List<Rentals> rentals = rentalRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Rentals rental : rentals) {
+            if (rental.getReturnDate().isBefore(now)) {
+                Cars car = rental.getCar();
+                car.setAvailable(true);
+                carRepository.save(car);
+            }
+        }
     }
 }
 

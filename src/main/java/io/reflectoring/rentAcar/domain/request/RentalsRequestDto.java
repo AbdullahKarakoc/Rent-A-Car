@@ -14,11 +14,11 @@ public class RentalsRequestDto {
 
     @NotNull(message = "Rental date is required")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date rentalDate;
+    private LocalDateTime rentalDate;
 
     @NotNull(message = "Return date is required")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date returnDate;
+    private LocalDateTime returnDate;
 
 
     @NotNull(message = "Car ID is required")

@@ -30,8 +30,8 @@ public class Rentals {
     @Id
     @GeneratedValue
     private UUID rentalUUID;
-    private Date rentalDate;
-    private Date returnDate;
+    private LocalDateTime rentalDate;
+    private LocalDateTime returnDate;
     private boolean deleted = Boolean.FALSE;
 
 
@@ -41,7 +41,7 @@ public class Rentals {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customerUUID", nullable = false)
-    private Customers customer;
+    private Customers   customer;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "paymentUUID", nullable = false)

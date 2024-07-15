@@ -45,7 +45,7 @@ public class Cars {
     private String plateNumber;
     private Integer year;
     private int pricePerHour;
-    private boolean isAvailable;
+    private boolean isAvailable = true;
     private boolean deleted = Boolean.FALSE;
 
     @ManyToOne(cascade = CascadeType.ALL)

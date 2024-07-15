@@ -11,9 +11,9 @@ import java.util.UUID;
 public class RentalsResponseDto {
     private UUID rentalUUID;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date rentalDate;
+    private LocalDateTime rentalDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date returnDate;
+    private LocalDateTime returnDate;
     private CarsResponseDto car;
     private StaffsResponseDto staff;
     private CustomersResponseDto customer;
