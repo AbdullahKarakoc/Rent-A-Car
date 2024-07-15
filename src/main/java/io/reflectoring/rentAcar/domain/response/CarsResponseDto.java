@@ -21,5 +21,8 @@ public class CarsResponseDto {
     private boolean isAvailable;
     private InsurancesResponseDto insurance;
     private BranchsResponseDto branch;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
 }

@@ -13,4 +13,8 @@ public class StaffsResponseDto {
     private String phone;
     private String email;
     private BranchsResponseDto branch;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
 }

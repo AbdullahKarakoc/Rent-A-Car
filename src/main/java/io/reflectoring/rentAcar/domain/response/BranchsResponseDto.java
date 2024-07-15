@@ -10,4 +10,8 @@ public class BranchsResponseDto {
     private UUID branchUUID;
     private String branchName;
     private BranchAddressResponseDto address;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
 }

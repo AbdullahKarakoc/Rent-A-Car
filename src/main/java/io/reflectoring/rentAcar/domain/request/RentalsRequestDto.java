@@ -21,7 +21,6 @@ public class RentalsRequestDto {
     private Date returnDate;
 
 
-
     @NotNull(message = "Car ID is required")
     private UUID carUUID;
 

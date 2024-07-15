@@ -49,5 +49,11 @@ public class BranchAddress {
     @Column(insertable = false)
     private LocalDateTime updatedAt;
 
+    @CreatedBy
+    @Column(nullable = false, updatable = false)
+    private String createdBy;
 
+    @LastModifiedBy
+    @Column(insertable = false)
+    private String updatedBy;
 }

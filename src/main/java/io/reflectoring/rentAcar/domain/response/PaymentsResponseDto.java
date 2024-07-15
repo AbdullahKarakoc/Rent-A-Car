@@ -10,5 +10,8 @@ public class PaymentsResponseDto {
     private UUID paymentUUID;
     private int totalAmount;
     private String paymentType;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
 }

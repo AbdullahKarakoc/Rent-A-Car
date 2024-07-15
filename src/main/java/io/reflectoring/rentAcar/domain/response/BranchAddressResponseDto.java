@@ -12,5 +12,9 @@ public class BranchAddressResponseDto {
     private String city;
     private String country;
     private String zipCode;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
 
 }

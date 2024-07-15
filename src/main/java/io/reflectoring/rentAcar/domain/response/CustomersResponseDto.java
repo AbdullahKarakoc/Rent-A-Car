@@ -11,8 +11,9 @@ public class CustomersResponseDto {
     private String firstName;
     private String lastName;
     private String phone;
-    private String address;
     private String email;
-
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
 }
