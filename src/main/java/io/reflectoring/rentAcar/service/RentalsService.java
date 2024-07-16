@@ -65,8 +65,9 @@ public class RentalsService {
         Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
                 .orElseThrow(() -> new DataNotFoundException("Staff not found"));
 
-        Customers customer = modelMapper.map(rentalRequestDto.getCustomer(), Customers.class);
-        customer = customerRepository.save(customer);
+        Customers customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
+                .orElseThrow(() -> new DataNotFoundException("Customer not found"));
+
 
         Payments payment = modelMapper.map(rentalRequestDto.getPayment(), Payments.class);
         payment = paymentsRepository.save(payment);
@@ -96,8 +97,9 @@ public class RentalsService {
         Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
                 .orElseThrow(() -> new DataNotFoundException("Staff not found"));
 
-        Customers customer = modelMapper.map(rentalRequestDto.getCustomer(), Customers.class);
-        customer = customerRepository.save(customer);
+        Customers customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
+                .orElseThrow(() -> new DataNotFoundException("Customer not found"));
+
 
         Payments payment = modelMapper.map(rentalRequestDto.getPayment(), Payments.class);
         payment = paymentsRepository.save(payment);

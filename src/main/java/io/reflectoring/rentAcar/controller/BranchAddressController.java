@@ -3,6 +3,7 @@ package io.reflectoring.rentAcar.controller;
 import io.reflectoring.rentAcar.domain.request.BranchAddressRequestDto;
 import io.reflectoring.rentAcar.domain.response.BranchAddressResponseDto;
 import io.reflectoring.rentAcar.service.BranchAddressService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/branch-addresses")
+@SecurityRequirement(name = "bearerAuth")
 public class BranchAddressController {
     @Autowired
     private BranchAddressService branchAddressService;
