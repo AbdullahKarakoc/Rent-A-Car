@@ -5,6 +5,7 @@ import io.reflectoring.rentAcar.enums.Color;
 import io.reflectoring.rentAcar.enums.Segment;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,10 +48,11 @@ public class CarsRequestDto {
     private int pricePerHour;
 
 
-
+    @Valid
     @NotNull(message = "Branch address is required")
     private InsurancesRequestDto insurances;
 
+    @Valid
     @NotNull(message = "Branch ID is required")
     private UUID branchUUID;
 }

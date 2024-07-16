@@ -3,6 +3,7 @@ package io.reflectoring.rentAcar.controller;
 import io.reflectoring.rentAcar.domain.request.CustomersRequestDto;
 import io.reflectoring.rentAcar.domain.response.CustomersResponseDto;
 import io.reflectoring.rentAcar.service.CustomersService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,12 @@ public class CustomersController {
     }
 
     @PostMapping
-    public CustomersResponseDto saveCustomer(@RequestBody CustomersRequestDto customerRequestDto) {
+    public CustomersResponseDto saveCustomer(@Valid @RequestBody CustomersRequestDto customerRequestDto) {
         return customerService.saveCustomer(customerRequestDto);
     }
 
     @PutMapping("/{id}")
-    public CustomersResponseDto updateCustomer(@PathVariable UUID id, @RequestBody CustomersRequestDto customerRequestDto) {
+    public CustomersResponseDto updateCustomer(@Valid @PathVariable UUID id, @RequestBody CustomersRequestDto customerRequestDto) {
         return customerService.updateCustomer(id, customerRequestDto);
     }
 

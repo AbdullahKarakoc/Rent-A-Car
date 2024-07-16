@@ -2,6 +2,8 @@ package io.reflectoring.rentAcar.auth._auth;
 
 import io.reflectoring.rentAcar.auth.email.EmailService;
 import io.reflectoring.rentAcar.auth.email.EmailTemplateName;
+import io.reflectoring.rentAcar.auth.handler.ActivationTokenExpiredException;
+import io.reflectoring.rentAcar.auth.handler.InvalidTokenException;
 import io.reflectoring.rentAcar.auth.handler.UserAlreadyExistsException;
 import io.reflectoring.rentAcar.auth.role.RoleRepository;
 import io.reflectoring.rentAcar.auth.security.JwtService;
@@ -87,10 +89,10 @@ public class AuthenticationService {
     public void activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByToken(token)
                 // todo exception has to be defined
-                .orElseThrow(() -> new RuntimeException("Invalid token"));
+                .orElseThrow(() -> new InvalidTokenException("Invalid token"));
         if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
             sendValidationEmail(savedToken.getUser());
-            throw new RuntimeException("Activation token has expired. A new token has been send to the same email address");
+            throw new ActivationTokenExpiredException("Activation token has expired. A new token has been sent to the same email address");
         }
 
         var user = userRepository.findById(savedToken.getUser().getId())

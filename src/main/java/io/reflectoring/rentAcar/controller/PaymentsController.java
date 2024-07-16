@@ -4,6 +4,7 @@ package io.reflectoring.rentAcar.controller;
 import io.reflectoring.rentAcar.domain.request.PaymentsRequestDto;
 import io.reflectoring.rentAcar.domain.response.PaymentsResponseDto;
 import io.reflectoring.rentAcar.service.PaymentsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +28,12 @@ public class PaymentsController {
     }
 
     @PostMapping
-    public PaymentsResponseDto savePayment(@RequestBody PaymentsRequestDto paymentRequestDto) {
+    public PaymentsResponseDto savePayment(@Valid @RequestBody PaymentsRequestDto paymentRequestDto) {
         return paymentService.savePayment(paymentRequestDto);
     }
 
     @PutMapping("/{id}")
-    public PaymentsResponseDto updatePayment(@PathVariable UUID id, @RequestBody PaymentsRequestDto paymentRequestDto) {
+    public PaymentsResponseDto updatePayment(@Valid @PathVariable UUID id, @RequestBody PaymentsRequestDto paymentRequestDto) {
         return paymentService.updatePayment(id, paymentRequestDto);
     }
 

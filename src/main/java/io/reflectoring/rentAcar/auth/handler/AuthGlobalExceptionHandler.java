@@ -1,5 +1,7 @@
 package io.reflectoring.rentAcar.auth.handler;
 
+import io.reflectoring.rentAcar.exception.DataNotFoundException;
+import io.reflectoring.rentAcar.exception.ErrorResponse;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,6 @@ public class AuthGlobalExceptionHandler {
                 );
     }
 
-
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ExceptionResponse> handleException() {
         return ResponseEntity
@@ -70,13 +71,11 @@ public class AuthGlobalExceptionHandler {
                 );
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exp) {
         Set<String> errors = new HashSet<>();
         exp.getBindingResult().getAllErrors()
                 .forEach(error -> {
-                    //var fieldName = ((FieldError) error).getField();
                     var errorMessage = error.getDefaultMessage();
                     errors.add(errorMessage);
                 });
@@ -88,6 +87,23 @@ public class AuthGlobalExceptionHandler {
                                 .validationErrors(errors)
                                 .build()
                 );
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleDataNotFoundException(DataNotFoundException exp) {
+        return ResponseEntity
+                .status(NOT_FOUND)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        ErrorResponse response = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)
@@ -105,9 +121,29 @@ public class AuthGlobalExceptionHandler {
 
 
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    @ExceptionHandler(ActivationTokenExpiredException.class)
+    public ResponseEntity<ExceptionResponse> handleActivationTokenExpiredException(ActivationTokenExpiredException exp) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        ExceptionResponse.builder()
+                                .businessErrorDescription(exp.getMessage())
+                                .build()
+                );
     }
+
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ExceptionResponse> handleInvalidTokenException(InvalidTokenException exp) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        ExceptionResponse.builder()
+                                .businessErrorDescription(exp.getMessage())
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
 
 }

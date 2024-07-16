@@ -17,6 +17,7 @@ public class InsurancesRequestDto {
     @NotNull(message = "Amount is required")
     private double cost;
 
+
     @NotBlank(message = "Insurance category is required")
     private InsuranceCategory category;
 }

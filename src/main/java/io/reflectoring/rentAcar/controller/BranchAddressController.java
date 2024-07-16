@@ -3,6 +3,7 @@ package io.reflectoring.rentAcar.controller;
 import io.reflectoring.rentAcar.domain.request.BranchAddressRequestDto;
 import io.reflectoring.rentAcar.domain.response.BranchAddressResponseDto;
 import io.reflectoring.rentAcar.service.BranchAddressService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,12 @@ public class BranchAddressController {
     }
 
     @PostMapping
-    public BranchAddressResponseDto saveBranchAddress(@RequestBody BranchAddressRequestDto branchAddressRequestDto) {
+    public BranchAddressResponseDto saveBranchAddress(@Valid @RequestBody BranchAddressRequestDto branchAddressRequestDto) {
         return branchAddressService.saveBranchAddress(branchAddressRequestDto);
     }
 
     @PutMapping("/{id}")
-    public BranchAddressResponseDto updateBranchAddress(@PathVariable UUID id, @RequestBody BranchAddressRequestDto branchAddressRequestDto) {
+    public BranchAddressResponseDto updateBranchAddress(@Valid @PathVariable UUID id, @RequestBody BranchAddressRequestDto branchAddressRequestDto) {
         return branchAddressService.updateBranchAddress(id, branchAddressRequestDto);
     }
 
