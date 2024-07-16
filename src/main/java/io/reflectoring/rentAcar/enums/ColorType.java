@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.enums;
 
-public enum Color {
+public enum ColorType {
     RED("RED"),
     BLUE("BLUE"),
     GREEN("GREEN"),
@@ -14,7 +14,7 @@ public enum Color {
 
     private final String value;
 
-    Color(String value) {
+    ColorType(String value) {
         this.value = value;
     }
 

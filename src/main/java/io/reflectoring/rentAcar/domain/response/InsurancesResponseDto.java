@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.domain.response;
 
-import io.reflectoring.rentAcar.enums.InsuranceCategory;
+import io.reflectoring.rentAcar.enums.InsuranceCategoryType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public class InsurancesResponseDto {
     private UUID insuranceUUID;
     private String provider;
     private double cost;
-    private InsuranceCategory category;
+    private InsuranceCategoryType category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;

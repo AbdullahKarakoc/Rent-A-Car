@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.enums;
 
-public enum Brand {
+public enum BrandType {
 
     AUDI("AUDI"),
     BMW("BMW"),
@@ -16,7 +16,7 @@ public enum Brand {
 
     private final String value;
 
-    Brand(String value) {
+    BrandType(String value) {
         this.value = value;
     }
 

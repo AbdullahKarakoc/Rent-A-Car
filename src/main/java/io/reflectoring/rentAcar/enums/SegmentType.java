@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.enums;
 
-public enum Segment {
+public enum SegmentType {
 
     A("A"),
     B("B"),
@@ -15,7 +15,7 @@ public enum Segment {
 
     private final String value;
 
-    Segment(String value) {
+    SegmentType(String value) {
         this.value = value;
     }
 

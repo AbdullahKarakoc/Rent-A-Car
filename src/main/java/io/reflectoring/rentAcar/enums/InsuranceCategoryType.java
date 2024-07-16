@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.enums;
 
-public enum InsuranceCategory {
+public enum InsuranceCategoryType {
     BASIC("BASIC"),
     STANDARD("STANDARD"),
     FULL_COVERAGE("FULL_COVERAGE"),
@@ -14,7 +14,7 @@ public enum InsuranceCategory {
 
     private final String value;
 
-    InsuranceCategory(String value) {
+    InsuranceCategoryType(String value) {
         this.value = value;
     }
 

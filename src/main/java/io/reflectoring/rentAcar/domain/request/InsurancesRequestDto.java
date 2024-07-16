@@ -1,11 +1,9 @@
 package io.reflectoring.rentAcar.domain.request;
 
-import io.reflectoring.rentAcar.enums.InsuranceCategory;
+import io.reflectoring.rentAcar.enums.InsuranceCategoryType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 public class InsurancesRequestDto {
@@ -18,6 +16,6 @@ public class InsurancesRequestDto {
     private double cost;
 
 
-    @NotBlank(message = "Insurance category is required")
-    private InsuranceCategory category;
+    @NotNull(message = "Insurance category is required")
+    private InsuranceCategoryType category;
 }

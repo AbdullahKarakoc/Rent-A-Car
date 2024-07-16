@@ -1,17 +1,13 @@
 package io.reflectoring.rentAcar.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import io.reflectoring.rentAcar.enums.Brand;
-import io.reflectoring.rentAcar.enums.Color;
-import io.reflectoring.rentAcar.enums.Segment;
+import io.reflectoring.rentAcar.enums.BrandType;
+import io.reflectoring.rentAcar.enums.ColorType;
+import io.reflectoring.rentAcar.enums.SegmentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DialectOverride;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,9 +15,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,10 +32,10 @@ public class Cars {
     @Id
     @GeneratedValue
     private UUID carUUID;
-    private Brand brand;
-    private Segment segment;
+    private BrandType brand;
+    private SegmentType segment;
     private String model;
-    private Color color;
+    private ColorType color;
     private String plateNumber;
     private Integer year;
     private int pricePerHour;

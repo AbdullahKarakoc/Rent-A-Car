@@ -41,7 +41,8 @@ public class SecurityConfig {
                                         "/configuration/security",
                                         "/swagger-ui/**",
                                         "/webjars/**",
-                                        "/swagger-ui.html"
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/index.html"
                                 )
                                 .permitAll()
                                 .requestMatchers(HttpMethod.GET,"/branch-addresses/**").hasAnyAuthority("USER","ADMIN","SUPER_USER")

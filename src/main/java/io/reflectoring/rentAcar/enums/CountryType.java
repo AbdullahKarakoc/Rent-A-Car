@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.enums;
 
-public enum Country {
+public enum CountryType {
 
     TURKEY("TURKEY"),
     AMERICA("AMERICA"),
@@ -11,7 +11,7 @@ public enum Country {
 
     private final String value;
 
-    Country(String value) {
+    CountryType(String value) {
         this.value = value;
     }
 

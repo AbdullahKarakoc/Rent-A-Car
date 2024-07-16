@@ -30,7 +30,7 @@ public class Payments {
     @GeneratedValue
     private UUID paymentUUID;
     private int totalAmount;
-    private PaymentType paymentType;
+    private PaymentType payment;
     private boolean deleted = Boolean.FALSE;
 
     @OneToOne(mappedBy = "payment",cascade = CascadeType.ALL)

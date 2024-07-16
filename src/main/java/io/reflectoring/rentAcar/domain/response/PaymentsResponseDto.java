@@ -9,7 +9,7 @@ import java.util.UUID;
 public class PaymentsResponseDto {
     private UUID paymentUUID;
     private int totalAmount;
-    private String paymentType;
+    private String payment;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;

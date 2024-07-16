@@ -1,14 +1,11 @@
 package io.reflectoring.rentAcar.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.reflectoring.rentAcar.enums.City;
-import io.reflectoring.rentAcar.enums.Country;
+import io.reflectoring.rentAcar.enums.CountryType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -34,7 +31,7 @@ public class BranchAddress {
     private UUID addressUUID;
     private String street;
     private String city;
-    private Country country;
+    private CountryType country;
     private String zipCode;
     private boolean deleted = Boolean.FALSE;
 

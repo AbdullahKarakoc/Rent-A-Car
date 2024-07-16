@@ -16,6 +16,6 @@ public class PaymentsRequestDto {
     @NotNull(message = "Amount is required")
     private int totalAmount;
 
-    @NotBlank(message = "Payment type is required")
+    @NotNull(message = "Payment type is required")
     private PaymentType paymentType;
 }

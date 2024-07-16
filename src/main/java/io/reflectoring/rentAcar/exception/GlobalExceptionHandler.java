@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
                 errorResponse.setErrorMessage("Invalid Category Value");
                 errorResponse.setDetails("The category value you entered is invalid");
             } else if (fieldName.equals("branchAddress.country")) {
-                errorResponse.setErrorMessage("Invalid Country Value");
+                errorResponse.setErrorMessage("Invalid CountryType Value");
                 errorResponse.setDetails("The country value you entered is invalid");
             } else {
                 errorResponse.setErrorMessage("Invalid Input");
@@ -105,6 +105,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleUnsupportedOperationException(UnsupportedOperationException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(CarNotAvailableException.class)
+    public ResponseEntity<ErrorResponse> handleCarNotAvailableException(CarNotAvailableException ex) {
+        ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     // Genel hata yakalayıcı
