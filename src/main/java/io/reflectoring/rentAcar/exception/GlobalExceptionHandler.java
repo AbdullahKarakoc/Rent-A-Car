@@ -37,17 +37,17 @@ public class GlobalExceptionHandler {
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
+            String fieldName = ((org.springframework.validation.FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
         return errors;
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
-        String error = "Invalid argument type: " + ex.getName();
+        String error = "Invalid argument type for " + ex.getName();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
@@ -56,8 +56,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalid argument");
 
-        if (ex.getCause() instanceof InvalidFormatException) {
-            InvalidFormatException invalidFormatException = (InvalidFormatException) ex.getCause();
+        Throwable rootCause = ex.getRootCause();
+        if (rootCause instanceof InvalidFormatException) {
+            InvalidFormatException invalidFormatException = (InvalidFormatException) rootCause;
             String fieldName = invalidFormatException.getPath().get(0).getFieldName();
             String fieldValue = invalidFormatException.getValue().toString();
 
@@ -67,6 +68,12 @@ public class GlobalExceptionHandler {
             } else if (fieldName.equals("bookCategory")) {
                 errorResponse.setErrorMessage("Invalid Category Value");
                 errorResponse.setDetails("The category value you entered is invalid");
+            } else if (fieldName.equals("branchAddress.country")) {
+                errorResponse.setErrorMessage("Invalid Country Value");
+                errorResponse.setDetails("The country value you entered is invalid");
+            } else {
+                errorResponse.setErrorMessage("Invalid Input");
+                errorResponse.setDetails("Invalid JSON format or input");
             }
         } else {
             errorResponse.setErrorMessage("An error occurred");
@@ -76,6 +83,7 @@ public class GlobalExceptionHandler {
         errorResponse.setTimestamp(LocalDateTime.now());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
