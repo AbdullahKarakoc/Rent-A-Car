@@ -152,7 +152,7 @@ The Rent A Car API provides endpoints to manage car rentals, customers, branches
 
 1. Clone the repository.
 2. Configure application.properties for database setup.
-3. docker-compose up -d   run docker.
+3. `docker-compose up -d` run docker.
 4. Build and run the application.
 5. Create a new user and verify it with the code in the incoming e-mail.
 6. Log in with the verified user and use the token in jwt format for authorization.
@@ -160,14 +160,241 @@ The Rent A Car API provides endpoints to manage car rentals, customers, branches
 
 
 
+## Testing Postman
+
+### Authentication and Authorization
+
+- User Register/POST
+
+   `http://localhost:8088/api/v1/auth/register`
+
+```json
+{
+  "firstname": "Abdullah",
+  "lastname": "karakoç",
+  "email": "abdullahkrkc1453@gmail.com",
+  "password": "12345678"
+}
+```
+- User account activation/GET (Token in Maildev: http://localhost:1080)
+
+  `http://localhost:8088/api/v1/auth/activate-account?token=926959`
+
+- User Login/POST
+  
+  `http://localhost:8088/api/v1/auth/authenticate`
+
+```json
+{
+  "email": "abdullahkrkc1453@gmail.com",
+  "password": "12345678"
+}
+```
+
+### Rental Transactions
+
+- Create Branch/POST
+
+  `http://localhost:8088/api/v1/branches`
+
+```json
+{
+  "branchName": "Central",
+  "branchAddress": {
+    "street": "123 Main St",
+    "city": "Ankara",
+    "country": "TURKEY",
+    "zipCode": "06000"
+  }
+}
+```
+
+- Create Car/POST
+
+  `http://localhost:8088/api/v1/cars`
+
+```json
+{
+  "brand": "TOYOTA",
+  "segment": "SUV",
+  "model": "RAV4",
+  "color": "BLUE",
+  "year": 2022,
+  "plateNumber": "34XYZ78",
+  "pricePerHour": 50,
+  "insurances": {
+    "provider": "Allianz",
+    "cost": 100.0,
+    "category": "FULL_COVERAGE"
+  },
+  "branchUUID": "354b8c39-ad13-4fa2-ad35-03836c89d460"
+}
+```
 
 
+- Create Staff/POST
+
+  `http://localhost:8088/api/v1/staff`
+
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "1234567890",
+  "email": "john.doe@example.com",
+  "branchUUID": "354b8c39-ad13-4fa2-ad35-03836c89d460"
+}
+```
+
+
+- Create Customer/POST
+
+  `http://localhost:8088/api/v1/customers`
+
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "licenseNumber": "AB123456",
+  "phone": "1234567890",
+  "email": "john.doe@example.com"
+}
+```
+
+- Create Rental/POST
+
+  `http://localhost:8088/api/v1/rentals`
+
+```json
+{
+  "rentalDate": "2024-07-12T00:00:00",
+  "returnDate": "2024-07-20T00:00:00",
+  "carUUID": "d0a53173-071c-4034-85ac-ec9062af68b0",
+  "staffUUID": "c49563ba-e9a4-41f8-9e8b-7cd3756b270a",
+  "customerUUID":"e1f1f153-2cac-4c80-8e55-20fcbd19e5a3",
+  "payment": {
+    "totalAmount": 450,
+    "paymentType": "CASH"
+  }
+}
+```
+
+- Rental Response/GET
+
+  `http://localhost:8088/api/v1/rentals`
+
+
+```json
+{
+  "rentalUUID": "d485ae6b-f40e-4110-970d-dffecb914d29",
+  "rentalDate": "2024-07-12T00:00:00",
+  "returnDate": "2024-07-20T00:00:00",
+  "car": {
+    "carUUID": "dc94cd83-7e6d-43a5-a568-504edee54f48",
+    "brand": "TOYOTA",
+    "segment": "SUV",
+    "model": "RAV4",
+    "color": "BLUE",
+    "year": 2022,
+    "plateNumber": "34XYZ78",
+    "pricePerHour": 50,
+    "insurance": {
+      "insuranceUUID": "31ff450c-55ca-454a-bf1f-0147018f0326",
+      "provider": "Allianz",
+      "cost": 100.0,
+      "category": "FULL_COVERAGE",
+      "createdAt": "2024-07-17T16:21:14.893823",
+      "updatedAt": null,
+      "createdBy": "abdullahkarakoc405@gmail.com",
+      "updatedBy": null
+    },
+    "branch": {
+      "branchUUID": "649ac92b-14d8-4084-8257-62e9810bb8a7",
+      "branchName": "Central",
+      "address": {
+        "addressUUID": "3c10d966-e44f-45fc-90d9-65ec0199cd25",
+        "street": "123 Main St",
+        "city": "Ankara",
+        "country": "TURKEY",
+        "zipCode": "06000",
+        "createdAt": "2024-07-17T16:20:57.896517",
+        "updatedAt": null,
+        "createdBy": "abdullahkarakoc405@gmail.com",
+        "updatedBy": null
+      },
+      "createdAt": "2024-07-17T16:20:57.88652",
+      "updatedAt": null,
+      "createdBy": "abdullahkarakoc405@gmail.com",
+      "updatedBy": null
+    },
+    "createdAt": "2024-07-17T16:21:14.921825",
+    "updatedAt": null,
+    "createdBy": "abdullahkarakoc405@gmail.com",
+    "updatedBy": null,
+    "available": false
+  },
+  "staff": {
+    "staffUUID": "1b310db8-aa4f-4578-a9cc-184f6008fa57",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phone": "1234567890",
+    "email": "john.doe@example.com",
+    "branch": {
+      "branchUUID": "649ac92b-14d8-4084-8257-62e9810bb8a7",
+      "branchName": "Central",
+      "address": {
+        "addressUUID": "3c10d966-e44f-45fc-90d9-65ec0199cd25",
+        "street": "123 Main St",
+        "city": "Ankara",
+        "country": "TURKEY",
+        "zipCode": "06000",
+        "createdAt": "2024-07-17T16:20:57.896517",
+        "updatedAt": null,
+        "createdBy": "abdullahkarakoc405@gmail.com",
+        "updatedBy": null
+      },
+      "createdAt": "2024-07-17T16:20:57.88652",
+      "updatedAt": null,
+      "createdBy": "abdullahkarakoc405@gmail.com",
+      "updatedBy": null
+    },
+    "createdAt": "2024-07-17T16:22:09.58698",
+    "updatedAt": null,
+    "createdBy": "abdullahkarakoc405@gmail.com",
+    "updatedBy": null
+  },
+  "customer": {
+    "customerUUID": "8b674466-0772-454a-b8f7-a25311601f98",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phone": "1234567890",
+    "email": "john.doe@example.com",
+    "createdAt": "2024-07-17T16:21:35.000499",
+    "updatedAt": null,
+    "createdBy": "abdullahkarakoc405@gmail.com",
+    "updatedBy": null
+  },
+  "payment": {
+    "paymentUUID": "53af2ec7-1d14-4dc3-8e12-2a08bdfeb4b8",
+    "totalAmount": 200,
+    "payment": null,
+    "createdAt": "2024-07-17T16:22:33.8552133",
+    "updatedAt": "2024-07-17T16:22:33.8552133",
+    "createdBy": "abdullahkarakoc405@gmail.com",
+    "updatedBy": "abdullahkarakoc405@gmail.com"
+  },
+  "createdAt": "2024-07-17T16:22:33.8692262",
+  "updatedAt": "2024-07-17T16:22:33.8692262",
+  "createdBy": "abdullahkarakoc405@gmail.com",
+  "updatedBy": "abdullahkarakoc405@gmail.com"
+}
+```
 
 
 
 ## Author
 
-Abdullah Karakoç
+>**Abdullah Karakoç**
 
 ## License
 
