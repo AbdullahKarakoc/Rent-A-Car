@@ -5,6 +5,7 @@ import io.reflectoring.rentAcar.domain.request.BranchAddressRequestDto;
 import io.reflectoring.rentAcar.domain.response.BranchAddressResponseDto;
 import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.BranchAddressRepository;
+import io.reflectoring.rentAcar.util.ErrorMessages;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class BranchAddressService {
 
     public BranchAddressResponseDto getBranchAddressById(UUID id) {
         BranchAddress branchAddress = branchAddressRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Branch address not found"));
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.BRANCH_ADDRESS_NOT_FOUND.getValue()));
         return modelMapper.map(branchAddress, BranchAddressResponseDto.class);
     }
 
@@ -42,7 +43,7 @@ public class BranchAddressService {
 
     public BranchAddressResponseDto updateBranchAddress(UUID id, BranchAddressRequestDto branchAddressRequestDto) {
         BranchAddress existingBranchAddress = branchAddressRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Branch address not found"));
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.BRANCH_ADDRESS_NOT_FOUND.getValue()));
         modelMapper.map(branchAddressRequestDto, existingBranchAddress);
         BranchAddress updatedBranchAddress = branchAddressRepository.save(existingBranchAddress);
         return modelMapper.map(updatedBranchAddress, BranchAddressResponseDto.class);
@@ -50,7 +51,7 @@ public class BranchAddressService {
 
     public void deleteBranchAddress(UUID id) {
         BranchAddress branchAddress = branchAddressRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Branch address not found"));
+                .orElseThrow(() -> new DataNotFoundException(ErrorMessages.BRANCH_ADDRESS_NOT_FOUND.getValue()));
         branchAddressRepository.delete(branchAddress);
     }
 }
