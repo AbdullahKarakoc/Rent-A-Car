@@ -36,6 +36,8 @@ public class CarsRequestDto {
     private String plateNumber;
 
     @NotNull(message = "Car's hourly price is required")
+    @Min(value = 1, message = "Hourly price must be at least 1")
+    @Max(value = 1000, message = "Hourly price must be less than or equal to 1000")
     private int pricePerHour;
 
 
