@@ -8,6 +8,7 @@ public class ErrorResponse {
     private String errorMessage;
     private String details;
     private LocalDateTime timestamp;
+    private String message;
 
     public ErrorResponse(int errorCode, String errorMessage) {
         this.errorCode = errorCode;
@@ -44,5 +45,17 @@ public class ErrorResponse {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public ErrorResponse(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

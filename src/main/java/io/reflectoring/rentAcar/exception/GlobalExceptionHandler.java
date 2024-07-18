@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,35 +53,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Invalid argument");
+    public ResponseEntity<ErrorResponse> handleValidationException(HttpMessageNotReadableException exception) {
+        String errorDetails = "";
 
-        Throwable rootCause = ex.getRootCause();
-        if (rootCause instanceof InvalidFormatException) {
-            InvalidFormatException invalidFormatException = (InvalidFormatException) rootCause;
-            String fieldName = invalidFormatException.getPath().get(0).getFieldName();
-            String fieldValue = invalidFormatException.getValue().toString();
-
-            if (fieldName.equals("roles")) {
-                errorResponse.setErrorMessage("Invalid Role Value");
-                errorResponse.setDetails("The role value you entered is invalid");
-            } else if (fieldName.equals("bookCategory")) {
-                errorResponse.setErrorMessage("Invalid Category Value");
-                errorResponse.setDetails("The category value you entered is invalid");
-            } else if (fieldName.equals("branchAddress.country")) {
-                errorResponse.setErrorMessage("Invalid CountryType Value");
-                errorResponse.setDetails("The country value you entered is invalid");
-            } else {
-                errorResponse.setErrorMessage("Invalid Input");
-                errorResponse.setDetails("Invalid JSON format or input");
+        if (exception.getCause() instanceof InvalidFormatException) {
+            InvalidFormatException ifx = (InvalidFormatException) exception.getCause();
+            if (ifx.getTargetType()!=null && ifx.getTargetType().isEnum()) {
+                errorDetails = String.format("Invalid enum value: '%s' for the field: '%s'. The value must be one of: %s.",
+                        ifx.getValue(), ifx.getPath().get(ifx.getPath().size()-1).getFieldName(), Arrays.toString(ifx.getTargetType().getEnumConstants()));
             }
-        } else {
-            errorResponse.setErrorMessage("An error occurred");
-            errorResponse.setDetails("Invalid JSON format");
         }
 
-        errorResponse.setTimestamp(LocalDateTime.now());
+        ErrorResponse errorResponse = new ErrorResponse(errorDetails);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 

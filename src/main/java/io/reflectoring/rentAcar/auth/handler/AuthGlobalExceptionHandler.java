@@ -106,18 +106,18 @@ public class AuthGlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception exp) {
-        exp.printStackTrace();
-        return ResponseEntity
-                .status(INTERNAL_SERVER_ERROR)
-                .body(
-                        ExceptionResponse.builder()
-                                .businessErrorDescription("Internal error, please contact the admin")
-                                .error(exp.getMessage())
-                                .build()
-                );
-    }
+//    @ExceptionHandler(Exception.class)     # HttpMessageNotReadableException çalışmasını engelliyor
+//    public ResponseEntity<ExceptionResponse> handleException(Exception exp) {
+//        exp.printStackTrace();
+//        return ResponseEntity
+//                .status(INTERNAL_SERVER_ERROR)
+//                .body(
+//                        ExceptionResponse.builder()
+//                                .businessErrorDescription("Internal error, please contact the admin")
+//                                .error(exp.getMessage())
+//                                .build()
+//                );
+//    }
 
 
 
