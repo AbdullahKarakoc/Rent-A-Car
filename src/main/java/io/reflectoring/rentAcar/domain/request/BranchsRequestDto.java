@@ -12,7 +12,7 @@ import java.util.UUID;
 public class BranchsRequestDto {
 
     @NotBlank(message = "Branch name is required")
-    @Size(min = 1, max = 50, message = "Branch name must be between 1 and 50 characters")
+    @Size(min = 1, max = 25, message = "Branch name must be between 1 and 25 characters")
     private String branchName;
 
     @Valid

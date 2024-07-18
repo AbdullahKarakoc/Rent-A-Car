@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Rent A Car API provides endpoints to manage car rentals, customers, branches, payments, insurances, and rentals. It allows users to perform CRUD operations and manage car bookings.
+The Rent A Car API provides endpoints to manage cars, customers, branches, payments,staff, branches address, insurances, and rentals. It allows users to perform CRUD operations and manage car bookings.
 
 ## TECHNOLOGIES
 

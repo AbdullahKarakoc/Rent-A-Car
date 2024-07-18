@@ -20,7 +20,7 @@ public class CarsRequestDto {
 
     @NotBlank(message = "Model is required")
     @Pattern(regexp = "^[a-zA-Z0-9\\s]+$", message = "Model name must be alphanumeric")
-    @Size(min = 1, max = 50, message = "Model name length must be between 1 and 50 characters")
+    @Size(min = 1, max = 25, message = "Model name length must be between 1 and 25 characters")
     private String model;
 
     @NotNull(message = "Color is required")
@@ -32,7 +32,7 @@ public class CarsRequestDto {
 
     @NotBlank(message = "Plate number is required")
     @Pattern(regexp = "^[a-zA-Z0-9\\s]+$", message = "Plate number must be alphanumeric")
-    @Size(min = 5, max = 7, message = "Plate number length must be between 1 and 50 characters")
+    @Size(min = 5, max = 7, message = "Plate number length must be between 5 and 7 characters")
     private String plateNumber;
 
     @NotNull(message = "Car's hourly price is required")
