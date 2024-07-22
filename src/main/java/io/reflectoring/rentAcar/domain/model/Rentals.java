@@ -1,5 +1,6 @@
 package io.reflectoring.rentAcar.domain.model;
 
+import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,7 +42,7 @@ public class Rentals {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customerUUID", nullable = false)
-    private Customers   customer;
+    private Customer customer;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "paymentUUID", nullable = false)

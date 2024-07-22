@@ -1,5 +1,7 @@
 package io.reflectoring.rentAcar.service;
 
+import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
+import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomerRepository;
 import io.reflectoring.rentAcar.domain.model.*;
 import io.reflectoring.rentAcar.domain.request.RentalsRequestDto;
 import io.reflectoring.rentAcar.domain.response.RentalsResponseDto;
@@ -28,7 +30,7 @@ public class RentalsService {
     private CarsRepository carRepository;
 
     @Autowired
-    private CustomersRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private StaffRepository staffRepository;
@@ -65,7 +67,7 @@ public class RentalsService {
         Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
                 .orElseThrow(() -> new DataNotFoundException("Staff not found"));
 
-        Customers customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
+        Customer customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
                 .orElseThrow(() -> new DataNotFoundException("Customer not found"));
 
 
@@ -97,7 +99,7 @@ public class RentalsService {
         Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
                 .orElseThrow(() -> new DataNotFoundException("Staff not found"));
 
-        Customers customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
+        Customer customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
                 .orElseThrow(() -> new DataNotFoundException("Customer not found"));
 
 

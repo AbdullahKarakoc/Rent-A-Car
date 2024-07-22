@@ -1,5 +1,6 @@
 package io.reflectoring.rentAcar.auth.user;
 
+import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,10 @@ public class Token {
     private LocalDateTime validatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userId")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private Customer customer;
 }
