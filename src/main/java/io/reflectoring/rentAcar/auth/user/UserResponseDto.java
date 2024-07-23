@@ -1,5 +1,7 @@
 package io.reflectoring.rentAcar.auth.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.reflectoring.rentAcar.domain.response.RentalsResponseDto;
 import jakarta.persistence.Column;
 import lombok.Data;
@@ -18,7 +20,6 @@ public class UserResponseDto {
     private LocalDate dateOfBirth;
     @Column(unique = true)
     private String email;
-    private String password;
     private List<RentalsResponseDto> rentals;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

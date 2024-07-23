@@ -9,6 +9,7 @@ import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.CarsRepository;
 import io.reflectoring.rentAcar.repository.InsurancesRepository;
 import io.reflectoring.rentAcar.repository.RentalsRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class InsurancesService {
 
-    @Autowired
-    private InsurancesRepository insuranceRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final InsurancesRepository insuranceRepository;
+    private final ModelMapper modelMapper;
 
     public List<InsurancesResponseDto> getAllInsurances() {
         List<Insurances> insurances = insuranceRepository.findAll();
@@ -34,29 +33,34 @@ public class InsurancesService {
     }
 
     public InsurancesResponseDto getInsuranceById(UUID id) {
-        Insurances insurance = insuranceRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Insurance not found"));
+        Insurances insurance = findById(id);
         return modelMapper.map(insurance, InsurancesResponseDto.class);
     }
 
     public InsurancesResponseDto saveInsurance(InsurancesRequestDto insuranceRequestDto) {
         Insurances insurance = modelMapper.map(insuranceRequestDto, Insurances.class);
-        insurance = insuranceRepository.save(insurance);
-        return modelMapper.map(insurance, InsurancesResponseDto.class);
+        Insurances savedInsurance = save(insurance);
+        return modelMapper.map(savedInsurance, InsurancesResponseDto.class);
     }
 
     public InsurancesResponseDto updateInsurance(UUID id, InsurancesRequestDto insuranceRequestDto) {
-        Insurances existingInsurance = insuranceRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Insurance not found"));
-
+        Insurances existingInsurance = findById(id);
         modelMapper.map(insuranceRequestDto, existingInsurance);
-        Insurances updatedInsurance = insuranceRepository.save(existingInsurance);
+        Insurances updatedInsurance = save(existingInsurance);
         return modelMapper.map(updatedInsurance, InsurancesResponseDto.class);
     }
 
     public void deleteInsurance(UUID id) {
-        Insurances insurance = insuranceRepository.findById(id)
+        Insurances existingInsurance = findById(id);
+        insuranceRepository.delete(existingInsurance);
+    }
+
+    public Insurances save(Insurances insurance) {
+        return insuranceRepository.saveAndFlush(insurance);
+    }
+
+    public Insurances findById(UUID id) {
+        return insuranceRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Insurance not found"));
-        insuranceRepository.delete(insurance);
     }
 }

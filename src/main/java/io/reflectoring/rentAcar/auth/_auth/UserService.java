@@ -4,11 +4,14 @@ import io.reflectoring.rentAcar.auth.user.User;
 import io.reflectoring.rentAcar.auth.user.UserRepository;
 import io.reflectoring.rentAcar.auth.user.UserResponseDto;
 import io.reflectoring.rentAcar.domain.model.Rentals;
+import io.reflectoring.rentAcar.domain.response.CarsResponseDto;
 import io.reflectoring.rentAcar.domain.response.RentalsResponseDto;
 import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.RentalsRepository;
+import io.reflectoring.rentAcar.service.RentalsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,52 +22,43 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final RentalsService rentalsService;
 
-    @Autowired
-    private RentalsRepository rentalsRepository;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private UserService(
+            UserRepository userRepository,
+            @Lazy RentalsService rentalsService,
+            ModelMapper modelMapper){
+
+        this.userRepository = userRepository;
+        this.rentalsService = rentalsService;
+        this.modelMapper = modelMapper;
+    }
+
 
     public List<UserResponseDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                .map(user -> {
-                    UserResponseDto userDto = modelMapper.map(user, UserResponseDto.class);
-                    List<Rentals> rentals = rentalsRepository.findByUser_UserUUID(user.getUserUUID());
-                    List<RentalsResponseDto> rentalDtos = rentals.stream()
-                            .map(rental -> modelMapper.map(rental, RentalsResponseDto.class))
-                            .collect(Collectors.toList());
-                    userDto.setRentals(rentalDtos);
-                    return userDto;
-                })
+                .map(user -> modelMapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     public UserResponseDto getUserById(UUID id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("User not found"));
-        UserResponseDto userDto = modelMapper.map(user, UserResponseDto.class);
-        List<Rentals> rentals = rentalsRepository.findByUser_UserUUID(user.getUserUUID());
-        List<RentalsResponseDto> rentalDtos = rentals.stream()
-                .map(rental -> modelMapper.map(rental, RentalsResponseDto.class))
-                .collect(Collectors.toList());
-        userDto.setRentals(rentalDtos);
-        return userDto;
+        User user = findById(id);
+        return modelMapper.map(user, UserResponseDto.class);
+
     }
 
     public UserResponseDto updateUser(UUID id, AuthenticationRequest authenticationRequest) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("User not found"));
-
+        User existingUser = findById(id);
         modelMapper.map(authenticationRequest, existingUser);
-        User updatedUser = userRepository.save(existingUser);
+        User updatedUser = save(existingUser);
 
         UserResponseDto userDto = modelMapper.map(updatedUser, UserResponseDto.class);
-        List<Rentals> rentals = rentalsRepository.findByUser_UserUUID(updatedUser.getUserUUID());
+        List<Rentals> rentals = rentalsService.getRentalsByUser(updatedUser);
         List<RentalsResponseDto> rentalDtos = rentals.stream()
                 .map(rental -> modelMapper.map(rental, RentalsResponseDto.class))
                 .collect(Collectors.toList());
@@ -74,8 +68,19 @@ public class UserService {
     }
 
     public void deleteUser(UUID id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("User not found"));
+        User user = findById(id);
         userRepository.delete(user);
     }
+
+    public User findById(UUID id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("User not found"));
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
+
+
+

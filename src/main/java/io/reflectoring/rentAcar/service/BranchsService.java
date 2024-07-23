@@ -7,6 +7,7 @@ import io.reflectoring.rentAcar.domain.response.BranchsResponseDto;
 import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import io.reflectoring.rentAcar.repository.BranchAddressRepository;
 import io.reflectoring.rentAcar.repository.BranchsRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
 @Service
+@RequiredArgsConstructor
 public class BranchsService {
 
-    @Autowired
-    private BranchsRepository branchRepository;
-
-    @Autowired
-    private BranchAddressRepository branchAddressRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final BranchsRepository branchRepository;
+    private final ModelMapper modelMapper;
 
     public List<BranchsResponseDto> getAllBranches() {
         List<Branchs> branches = branchRepository.findAll();
@@ -35,34 +32,41 @@ public class BranchsService {
     }
 
     public BranchsResponseDto getBranchById(UUID id) {
-        Branchs branch = branchRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Branch not found"));
+        Branchs branch = findById(id);
         return modelMapper.map(branch, BranchsResponseDto.class);
     }
 
     public BranchsResponseDto saveBranch(BranchsRequestDto branchRequestDto) {
         Branchs branch = modelMapper.map(branchRequestDto, Branchs.class);
         branch.setAddress(modelMapper.map(branchRequestDto.getBranchAddress(), BranchAddress.class));
-        branch = branchRepository.saveAndFlush(branch);
-        return modelMapper.map(branch, BranchsResponseDto.class);
+        Branchs savedBranch = save(branch);
+        return modelMapper.map(savedBranch, BranchsResponseDto.class);
     }
 
     public BranchsResponseDto updateBranch(UUID id, BranchsRequestDto branchRequestDto) {
-        Branchs existingBranch = branchRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Branch not found"));
+        Branchs existingBranch = findById(id);
 
         modelMapper.map(branchRequestDto, existingBranch);
         existingBranch.setAddress(modelMapper.map(branchRequestDto.getBranchAddress(), BranchAddress.class));
 
-        Branchs updatedBranch = branchRepository.save(existingBranch);
+        Branchs updatedBranch = save(existingBranch);
         return modelMapper.map(updatedBranch, BranchsResponseDto.class);
     }
 
     public void deleteBranch(UUID id) {
-        Branchs branch = branchRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Branch not found"));
-
+        Branchs branch = findById(id);
         branch.setDeleted(true);
-        branchRepository.save(branch);
+        save(branch);
+    }
+
+    public Branchs save(Branchs branch) {
+        return branchRepository.saveAndFlush(branch);
+    }
+
+    public Branchs findById(UUID id) {
+        return branchRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Branch not found"));
     }
 }
+
+
