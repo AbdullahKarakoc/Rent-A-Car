@@ -1,10 +1,10 @@
 package io.reflectoring.rentAcar.domain.response;
 
+import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomersResponseDto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Data

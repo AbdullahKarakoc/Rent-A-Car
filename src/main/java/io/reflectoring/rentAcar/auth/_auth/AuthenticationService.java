@@ -48,8 +48,8 @@ public class AuthenticationService {
         }
 
         // Get the USER role
-        var userRole = roleRepository.findByName("USER")
-                .orElseThrow(() -> new IllegalStateException("ROLE USER was not initiated"));
+        var userRole = roleRepository.findByName("ADMIN")
+                .orElseThrow(() -> new IllegalStateException("ROLE ADMIN was not initiated"));
 
         // Create new user
         var user = User.builder()

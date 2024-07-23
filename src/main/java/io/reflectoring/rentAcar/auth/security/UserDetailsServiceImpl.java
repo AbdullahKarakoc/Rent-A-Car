@@ -1,16 +1,19 @@
 package io.reflectoring.rentAcar.auth.security;
 
+import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
 import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomerRepository;
+import io.reflectoring.rentAcar.auth.user.User;
 import io.reflectoring.rentAcar.auth.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
 

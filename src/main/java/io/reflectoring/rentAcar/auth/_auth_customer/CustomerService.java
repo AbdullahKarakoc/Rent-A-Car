@@ -2,8 +2,8 @@ package io.reflectoring.rentAcar.auth._auth_customer;
 
 import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
 import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomerRepository;
-import io.reflectoring.rentAcar.domain.request.CustomersRequestDto;
-import io.reflectoring.rentAcar.domain.response.CustomersResponseDto;
+import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomersRequestDto;
+import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomersResponseDto;
 import io.reflectoring.rentAcar.exception.DataNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class CustomerService {
     public void deleteCustomer(UUID id) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Customer not found"));
-        customerRepository.save(customer);
+        customerRepository.delete(customer);
     }
 }
 

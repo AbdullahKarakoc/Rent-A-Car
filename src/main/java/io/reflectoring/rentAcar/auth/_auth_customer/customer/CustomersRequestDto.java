@@ -1,18 +1,13 @@
-package io.reflectoring.rentAcar.auth._auth_customer;
+package io.reflectoring.rentAcar.auth._auth_customer.customer;
 
 import jakarta.validation.constraints.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@Builder
-public class CustomerRegistrationRequest {
-
+@Data
+public class CustomersRequestDto {
 
     @NotBlank(message = "Firstname is mandatory")
     private String firstname;
@@ -27,5 +22,4 @@ public class CustomerRegistrationRequest {
     @NotNull(message = "Password is mandatory")
     @Size(min = 8, message = "Password should be 8 characters long minimum")
     private String password;
-
 }

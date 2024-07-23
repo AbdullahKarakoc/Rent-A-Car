@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.auth.config;
 
-import io.reflectoring.rentAcar.auth.security.UserDetailsService;
+import io.reflectoring.rentAcar.auth.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class BeansConfig {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

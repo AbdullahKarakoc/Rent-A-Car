@@ -42,9 +42,7 @@ public class Customer implements UserDetails, Principal {
     private String firstname;
     private String lastname;
     private LocalDate dateOfBirth;
-    private String licenseNumber;
     @Column(unique = true)
-    private String phone;
     private String email;
     private String password;
     private boolean accountLocked;

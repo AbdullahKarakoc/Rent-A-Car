@@ -1,7 +1,7 @@
 package io.reflectoring.rentAcar.auth._auth_customer;
 
-import io.reflectoring.rentAcar.domain.request.CustomersRequestDto;
-import io.reflectoring.rentAcar.domain.response.CustomersResponseDto;
+import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomersRequestDto;
+import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomersResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,8 +26,6 @@ public class CustomerAuthenticationController {
 
     @Autowired
     private CustomerService customerService;
-
-
 
 
     @PostMapping("/register")
