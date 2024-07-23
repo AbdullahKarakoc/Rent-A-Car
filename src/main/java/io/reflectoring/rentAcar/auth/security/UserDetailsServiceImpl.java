@@ -1,8 +1,5 @@
 package io.reflectoring.rentAcar.auth.security;
 
-import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
-import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomerRepository;
-import io.reflectoring.rentAcar.auth.user.User;
 import io.reflectoring.rentAcar.auth.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,20 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepository userRepository;
-    private final CustomerRepository customerRepository;
-
+    private final UserRepository repository;
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        UserDetails userDetails = userRepository.findByEmail(userEmail).orElse(null);
-        if (userDetails == null) {
-            userDetails = customerRepository.findByEmail(userEmail).orElse(null);
-        }
-        if (userDetails == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return userDetails;
+        return repository.findByEmail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }
 

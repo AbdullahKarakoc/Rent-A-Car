@@ -4,6 +4,9 @@ import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,6 +19,9 @@ public class RegistrationRequest {
     @NotEmpty(message = "Lastname is mandatory")
     @NotNull(message = "Lastname is mandatory")
     private String lastname;
+    @NotNull(message = "Rental date is required")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfBirth;
     @Email(message = "Email is not well formatted")
     @NotEmpty(message = "Email is mandatory")
     @NotNull(message = "Email is mandatory")

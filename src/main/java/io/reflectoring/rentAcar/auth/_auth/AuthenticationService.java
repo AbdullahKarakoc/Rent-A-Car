@@ -48,13 +48,14 @@ public class AuthenticationService {
         }
 
         // Get the USER role
-        var userRole = roleRepository.findByName("ADMIN")
-                .orElseThrow(() -> new IllegalStateException("ROLE ADMIN was not initiated"));
+        var userRole = roleRepository.findByName("USER")
+                .orElseThrow(() -> new IllegalStateException("ROLE USER was not initiated"));
 
         // Create new user
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
+                .dateOfBirth(request.getDateOfBirth())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .accountLocked(false)
@@ -95,7 +96,7 @@ public class AuthenticationService {
             throw new ActivationTokenExpiredException("Activation token has expired. A new token has been sent to the same email address");
         }
 
-        var user = userRepository.findById(savedToken.getUser().getId())
+        var user = userRepository.findById(savedToken.getUser().getUserUUID())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         user.setEnabled(true);
         userRepository.save(user);

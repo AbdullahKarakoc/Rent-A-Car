@@ -1,6 +1,7 @@
 package io.reflectoring.rentAcar.domain.model;
 
-import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.reflectoring.rentAcar.auth.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,8 +42,9 @@ public class Rentals {
     private Cars car;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customerUUID", nullable = false)
-    private Customer customer;
+    @JoinColumn(name = "userUUID", nullable = false)
+    @JsonIgnore
+    private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "paymentUUID", nullable = false)

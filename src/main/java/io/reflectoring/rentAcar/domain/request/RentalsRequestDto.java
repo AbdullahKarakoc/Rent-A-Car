@@ -28,8 +28,8 @@ public class RentalsRequestDto {
     @NotNull(message = "Staff ID is required")
     private UUID staffUUID;
 
-    @NotNull(message = "Customer ID is required")
-    private UUID customerUUID;
+    @NotNull(message = "User ID is required")
+    private UUID userUUID;
 
     @Valid
     @NotNull(message = "Payment information is required")

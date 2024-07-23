@@ -1,5 +1,6 @@
 package io.reflectoring.rentAcar.auth.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.reflectoring.rentAcar.auth.role.Role;
 import io.reflectoring.rentAcar.domain.model.Rentals;
 import jakarta.persistence.*;
@@ -37,7 +38,7 @@ public class User implements UserDetails, Principal {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID userUUID;
     private String firstname;
     private String lastname;
     private LocalDate dateOfBirth;
@@ -50,6 +51,9 @@ public class User implements UserDetails, Principal {
     @ManyToMany(fetch = EAGER) // associated objects are always loaded along with the parent object
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Rentals> rentals;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

@@ -1,7 +1,6 @@
 package io.reflectoring.rentAcar.auth.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
 import io.reflectoring.rentAcar.auth.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,10 +30,6 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
     private List<User> user;
-
-    @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
-    private List<Customer> customer;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

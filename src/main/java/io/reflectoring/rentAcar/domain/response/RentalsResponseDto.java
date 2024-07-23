@@ -1,6 +1,6 @@
 package io.reflectoring.rentAcar.domain.response;
 
-import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomersResponseDto;
+import io.reflectoring.rentAcar.auth.user.UserResponseDto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,7 +16,6 @@ public class RentalsResponseDto {
     private LocalDateTime returnDate;
     private CarsResponseDto car;
     private StaffsResponseDto staff;
-    private CustomersResponseDto customer;
     private PaymentsResponseDto payment;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

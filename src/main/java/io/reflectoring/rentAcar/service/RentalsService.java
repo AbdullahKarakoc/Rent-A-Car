@@ -1,7 +1,7 @@
 package io.reflectoring.rentAcar.service;
 
-import io.reflectoring.rentAcar.auth._auth_customer.customer.Customer;
-import io.reflectoring.rentAcar.auth._auth_customer.customer.CustomerRepository;
+import io.reflectoring.rentAcar.auth.user.User;
+import io.reflectoring.rentAcar.auth.user.UserRepository;
 import io.reflectoring.rentAcar.domain.model.*;
 import io.reflectoring.rentAcar.domain.request.RentalsRequestDto;
 import io.reflectoring.rentAcar.domain.response.RentalsResponseDto;
@@ -30,7 +30,7 @@ public class RentalsService {
     private CarsRepository carRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private StaffRepository staffRepository;
@@ -67,7 +67,7 @@ public class RentalsService {
         Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
                 .orElseThrow(() -> new DataNotFoundException("Staff not found"));
 
-        Customer customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
+        User user = userRepository.findById(rentalRequestDto.getUserUUID())
                 .orElseThrow(() -> new DataNotFoundException("Customer not found"));
 
 
@@ -77,7 +77,7 @@ public class RentalsService {
         Rentals rental = modelMapper.map(rentalRequestDto, Rentals.class);
         rental.setCar(car);
         rental.setStaff(staff);
-        rental.setCustomer(customer);
+        rental.setUser(user);
         rental.setPayment(payment);
 
         // Set car as unavailable
@@ -99,7 +99,7 @@ public class RentalsService {
         Staffs staff = staffRepository.findById(rentalRequestDto.getStaffUUID())
                 .orElseThrow(() -> new DataNotFoundException("Staff not found"));
 
-        Customer customer = customerRepository.findById(rentalRequestDto.getCustomerUUID())
+        User user = userRepository.findById(rentalRequestDto.getUserUUID())
                 .orElseThrow(() -> new DataNotFoundException("Customer not found"));
 
 
@@ -109,7 +109,7 @@ public class RentalsService {
         modelMapper.map(rentalRequestDto, existingRental);
         existingRental.setCar(car);
         existingRental.setStaff(staff);
-        existingRental.setCustomer(customer);
+        existingRental.setUser(user);
         existingRental.setPayment(payment);
 
         Rentals updatedRental = rentalRepository.save(existingRental);
