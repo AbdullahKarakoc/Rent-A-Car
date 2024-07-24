@@ -153,7 +153,7 @@ context-path: http://localhost:8088/api/v1
 
 ### ERD
 
-![Rent A Car ERD](images/Rent A Car.png)
+[Rent A Car ERD](images/Rent A Car.png)
 
 
 ## Getting Started
