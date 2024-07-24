@@ -153,7 +153,7 @@ context-path: http://localhost:8088/api/v1
 
 ### ERD
 
-[Rent A Car ERD](images/Rent A Car.png)
+![Rent A Car ERD](https://github.com/AbdullahKarakoc/Rent-A-Car/blob/dev_test/images/Rent%20A%20Car.png)
 
 
 ## Getting Started
