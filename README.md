@@ -163,6 +163,8 @@ The Rent A Car API provides endpoints to manage cars, customers, branches, payme
 
 [Download Postman Collection](https://github.com/AbdullahKarakoc/Rent-A-Car/raw/dev_test/RentAcar.postman_collection.zip)
 
+[Download Postman Collection](https://github.com/AbdullahKarakoc/Rent-A-Car/raw/dev_test/RentACar_ERD.zip)
+
 
 ## Testing Postman
 
