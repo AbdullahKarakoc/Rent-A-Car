@@ -171,7 +171,7 @@ context-path: http://localhost:8088/api/v1
 
 [Download Postman Collection](https://github.com/AbdullahKarakoc/Rent-A-Car/raw/dev_test/RentAcar.postman_collection.zip)
 
-[Download ERD](https://github.com/AbdullahKarakoc/Rent-A-Car/raw/dev_test/RentACar_ERD.zip)
+[Download ERD.drawio](https://github.com/AbdullahKarakoc/Rent-A-Car/raw/dev_test/RentACar_ERD.zip)
 
 
 ## Testing Postman
