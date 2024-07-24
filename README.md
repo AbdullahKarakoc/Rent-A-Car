@@ -151,6 +151,10 @@ context-path: http://localhost:8088/api/v1
 
 >**docker-compose.yml** for docker configuration
 
+### ERD
+
+![Rent A Car ERD](images/Rent A Car.png)
+
 
 ## Getting Started
 
