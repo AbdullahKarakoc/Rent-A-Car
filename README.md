@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Rent A Car API provides endpoints to manage cars, customers, branches, payments,staff, branches address, insurances, and rentals. It allows users to perform CRUD operations and manage car bookings.
+The Rent A Car API provides endpoints to manage cars, users, branches, payments,staff, branches address, insurances, and rentals. It allows users to perform CRUD operations and manage car bookings.
 
 ## TECHNOLOGIES
 
@@ -52,6 +52,8 @@ The Rent A Car API provides endpoints to manage cars, customers, branches, payme
 
 ## Endpoints
 
+context-path: http://localhost:8088/api/v1
+
 ### Cars
 
 | HTTP Method | Endpoint                  | Description                               | Authority    |
@@ -62,15 +64,17 @@ The Rent A Car API provides endpoints to manage cars, customers, branches, payme
 | PUT         | /cars/{id}                | Updates a car by ID                       | ADMIN        |
 | DELETE      | /cars/{id}                | Deletes a car by ID                       | ADMIN        |
 
-### Customers
+### Users
 
-| HTTP Method | Endpoint                  | Description                               | Authority    |
-|-------------|---------------------------|-------------------------------------------|--------------|
-| POST        | /customers                | Creates a new customer                    | ADMIN & USER |
-| GET         | /customers                | Retrieves all customers                   | ADMIN        |
-| GET         | /customers/{id}           | Retrieves a customer by ID                | ADMIN & USER |
-| PUT         | /customers/{id}           | Updates a customer by ID                  | ADMIN & USER |
-| DELETE      | /customers/{id}           | Deletes a customer by ID                  | ADMIN        |
+| HTTP Method | Endpoint               | Description            | Authority    |
+|-------------|------------------------|------------------------|--------------|
+| POST        | /auth/register         | Create new user        | USER         |
+| GET         | /auth/activate-account | Activate user account  | USER         |
+| POST        | /auth/authenticate     | Authenticate user      | USER         |
+| GET         | /users                 | Retrieves all users    | ADMIN & USER |
+| GET         | /users/{id}            | Retrieves a user by ID | ADMIN & USER |
+| PUT         | /users/{id}            | Updates a user by ID   | ADMIN & USER |
+| DELETE      | /users/{id}            | Deletes a user  by ID  | ADMIN & USER |  
 
 ### Branches
 

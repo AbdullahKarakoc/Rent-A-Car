@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,6 +36,8 @@ import static jakarta.persistence.FetchType.EAGER;
 @Entity
 @Table(name = "_user")
 @EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE _user SET deleted = true WHERE userUUID=?")
+@Where(clause = "deleted=false")
 public class User implements UserDetails, Principal {
 
     @Id
@@ -47,6 +51,7 @@ public class User implements UserDetails, Principal {
     private String password;
     private boolean accountLocked;
     private boolean enabled;
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToMany(fetch = EAGER) // associated objects are always loaded along with the parent object
     private List<Role> roles;
